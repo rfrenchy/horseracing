@@ -1,5 +1,10 @@
 x current account created
-- find relevant data for place laying betting strategy
+x find relevant data for place laying betting strategy
 x create local db server
 x add initial raw table
-- set up git
+x set up git
+
+x clean up and install latest golang
+
+- set up racing api subscription (free for now)
+   - https://www.theracingapi.com/:
