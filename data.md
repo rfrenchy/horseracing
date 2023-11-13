@@ -1,0 +1,30 @@
+- Place Laying Betting Factors
+  - Historical Performance
+    - Past race results, weighted more on recent i.e. CURRENT FORM
+    - Previous performance at the specific track and distance i.e. DISTANCE SUITABILITY, TRACK SUITABILITY
+  - Jockey and Trainer Statistics
+    - Jockey win and place percentage
+    - Trainers success rate in placing horses
+  - Recent Form (akin to historical performance)
+  - Track Conditions
+    - how well the horse has performed on similar track conditions
+    * some horses excel in specific conditions (firm, soft, etc.)
+  - Weight Carried
+    - weight of jockey/stuff
+    - how horse fared with similar in past
+    - avoid? if no data / new weight
+  - Health and Injury History
+    - any recent injuries
+    - consistent and optimal health
+  - Betting Odds
+    - analyse odds being offered i.e. they might know something you don't if big discrepency
+  - Consistency
+    - i.e. consitency in position placement, in this case low?
+  - Class of Race
+    - i.e the competion the horse is up against, it may of been against less athletic horses before
+  - Speed and Pace Analysis
+    - horse SPEED and PACE in previous races
+    - some horses excel when leading, some excel chasing from the back at the end
+  - Draw or Post Position
+    - starting position can help/hinder particular horse placement
+    - check if horse has struggled historically in a position
