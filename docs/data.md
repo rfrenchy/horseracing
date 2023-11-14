@@ -1,3 +1,13 @@
+- Statistical Methods
+  - Descriptive statistics: mean, median, mode, variability (before betting, DEVELOPMENT phase)
+  - Inferential statistics: hypthoses testing and estimation (betting TESTING phase)
+  - Regression Analysis: 
+  - Bayesian Methods:
+  - Machine Learning
+
+
+
+
 - Place Laying Betting Factors
   - Historical Performance
     - Past race results, weighted more on recent i.e. CURRENT FORM

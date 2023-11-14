@@ -6,5 +6,8 @@ x set up git
 
 x clean up and install latest golang
 
-- set up racing api subscription (free for now)
+? set up racing api subscription (free for now)
    - https://www.theracingapi.com/:
+
+- set up rpscrape
+- re set up NordVPN
