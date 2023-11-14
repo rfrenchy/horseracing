@@ -9,5 +9,7 @@ x clean up and install latest golang
 ? set up racing api subscription (free for now)
    - https://www.theracingapi.com/:
 
-- set up rpscrape
-- re set up NordVPN
+x set up rpscrape
+x add raw data from a real race !!!!
+
+- repurchase NordVPN for scraping

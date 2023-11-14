@@ -6,8 +6,6 @@
   - Machine Learning
 
 
-
-
 - Place Laying Betting Factors
   - Historical Performance
     - Past race results, weighted more on recent i.e. CURRENT FORM
