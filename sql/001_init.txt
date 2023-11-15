@@ -1,3 +1,0 @@
-(TODO, move to SQL migration golang tool, this is just for reference as of now)
-
-CREATE TABLE race_raw (name VARCHAR(255), json JSONB);

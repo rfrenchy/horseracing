@@ -6,10 +6,11 @@ x set up git
 
 x clean up and install latest golang
 
-? set up racing api subscription (free for now)
-   - https://www.theracingapi.com/:
-
 x set up rpscrape
 x add raw data from a real race !!!!
 
-- repurchase NordVPN for scraping
+x create lingfield data table !
+- insert a row of data into lingfield table
+
+
+x repurchase NordVPN for scraping !!!!
