@@ -36,3 +36,9 @@
   - Draw or Post Position
     - starting position can help/hinder particular horse placement
     - check if horse has struggled historically in a position
+
+
+
+Downloaded / Processed
+[x] - 2023 lingfield flat 
+[] - 2022 lingfield flat
