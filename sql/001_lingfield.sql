@@ -1,5 +1,3 @@
--- CREATE TABLE race_raw (name VARCHAR(255), json JSONB);
-
 CREATE TABLE lingfield (
   "date" DATE,
   region VARCHAR(20), 
@@ -10,20 +8,20 @@ CREATE TABLE lingfield (
   class VARCHAR(10),
   pattern VARCHAR(255),
   rating_band VARCHAR(255),
-  age_band VARCHAR(255), -- todo, potentially convert this fk or something else to make queryable. Might have to do for multiple columns.
+  age_band VARCHAR(255),
   sex_rest VARCHAR(255),
   dist VARCHAR(255),
   dist_f VARCHAR(255),
   dist_m smallint,
   going VARCHAR(255),
-  ran smallint,
-  num smallint,
-  pos smallint,
-  draw smallint,
-  ovr_btn smallint,
-  btn smallint,
+  ran real,
+  num real,
+  pos real,
+  draw real,
+  ovr_btn real,
+  btn real,
   horse VARCHAR(255),
-  age smallint,
+  age real,
   sex VARCHAR(3),
   lbs smallint,
   hg VARCHAR(255),
@@ -32,9 +30,9 @@ CREATE TABLE lingfield (
   "dec" VARCHAR(255),
   jockey VARCHAR(255),
   trainer VARCHAR(255),
-  prize integer,
-  "or" smallint,
-  rpr smallint,
+  prize NUMERIC(10,5),
+  "or" VARCHAR(10),
+  rpr real, -- *1 RPR (Racing Post Rating) is a numerical assessment given by The Racing Post.
   sire VARCHAR(255),
   dam VARCHAR(255),
   damsire VARCHAR(255),
@@ -42,6 +40,5 @@ CREATE TABLE lingfield (
   "comment" TEXT
 );
 
---3,C,136,,1:53.98,113.98,1.44,Hector Crouch,Archie Watson,4104,77,82,Zoffany (IRE),Countess Chrissy GB,Declaration Of War,Hambleton Racing Ltd Xviii Partner,Made all - took keen hold - pushed along over 1f out - ridden and kept on inside final furlong(op 4/11)
 
-
+-- *1 RPR takes into account horse's finishing position, quality of opposition and the conditions of the race. RPR's are used by punters, trainers, and owners to make informed decisions when betting or planning future races.

@@ -10,7 +10,10 @@ x set up rpscrape
 x add raw data from a real race !!!!
 
 x create lingfield data table !
-- insert a row of data into lingfield table
-
+x insert a row of data into lingfield table
+X insert all for lingfield 2023
 
 x repurchase NordVPN for scraping !!!!
+
+- map column ints to names (no magic numbers in script)
+- get all 2022 lingfield then, -- all way back for years and years
