@@ -36,7 +36,7 @@ func main() {
 
         // Read CSV into var
 //        path := "./lingfield_2023_flat_no_title.csv"
-        path := "./2022.csv"
+        path := "./temp/2021.csv"
         d, err := os.ReadFile(path)
         if err != nil {
                 panic(err)
@@ -98,7 +98,7 @@ func main() {
                         panic(err)
                 }
 
-                rn++;
+                rn++
         }
 
         db.Close()
@@ -106,13 +106,16 @@ func main() {
 
 
 type root struct {}
+type data struct {}
 
-
+// TODO Make a different type for finishes, key pair? 
 func (p *root) position(s string) string {
         if s == "PU" { // pulled up
                 return strconv.Itoa(-1)
         } else if s == "UR" {
                 return strconv.Itoa(-2)
+        } else if s == "DSQ" {
+                return strconv.Itoa(-3)
         }
         return s
 }
