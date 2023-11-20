@@ -9,7 +9,7 @@ import (
   "os"
   "strings"
 
-  "github.com/urface/cli/v2"
+  "github.com/urfave/cli/v2"
   _ "github.com/lib/pq"
 )
 
@@ -27,18 +27,51 @@ import (
   **********************************************
 */
 func main() {
+        var commit bool
+        var filepath string
 
-        // Establish DB connection
+        app := &cli.App{
+                Name: "Result Insert",
+                Usage: "Extracts data from a csv from rpscrape, transform it into something insertable into local PostgresDB",
+                Action: func(*cli.Context) error {
+                        
+                        return run(commit, filepath)                
+                },
+                Flags: 
+                        []cli.Flag{
+                                &cli.BoolFlag{
+                                        Name: "commit",
+                                        Aliases: []string{"c"},
+                                        Value: false,
+                                        Usage: "insert data into real table rather than temp",
+                                        Destination: &commit,
+                                },
+                                
+                                &cli.StringFlag{
+                                        Name: "filepath",
+                                        Aliases: []string{"f"},
+                                        Usage: "path to csv horse-racing file to extract",
+                                        Destination: &filepath,
+                                },
+                        },
+                }
+
+        if err := app.Run(os.Args); err != nil {
+                panic(err)
+        }
+}
+
+func run(commit bool, filepath string) error {
+
+        // Open DB connection
         cs := "postgresql://localhost/horse_racing?sslmode=disable"
         db, err := sql.Open("postgres", cs)
         if err != nil {
                 panic(err)
         }
 
-        // Read CSV into var
-//        path := "./lingfield_2023_flat_no_title.csv"
-        path := "./temp/2020.csv"
-        d, err := os.ReadFile(path)
+        // Read CSV 
+        d, err := os.ReadFile(filepath)
         if err != nil {
                 panic(err)
         }
@@ -46,21 +79,24 @@ func main() {
         r := csv.NewReader(strings.NewReader(string(d)))
         rn := 1
 
-        fmt.Println("Processing CSV")
+        tn := "temp"
+        if commit {
+                tn = "lingfield"
+        }
+
+        // Process CSV
         for {
-                fmt.Println("* row: ", rn)
-                
                 record, err := r.Read()
                 if err == io.EOF {
                         break;
                 }
                 if err != nil {
-                        panic(err)
+                        return err
                 }
 
                 tx, err := db.Begin()
                 if err != nil {
-                        panic(err)
+                        return err
                 }
 
                 var sb strings.Builder
@@ -84,32 +120,36 @@ func main() {
                         }
                 }
 
+                // TODO only need to do this once
                 v := strings.TrimRight(sb.String(), ",") // remove trailing comma
-
-                //st := "INSERT INTO lingfield VALUES(" + v + ");"
-                st := "INSERT INTO temp VALUES(" + v + ");"
-
+                st := fmt.Sprintf("INSERT INTO %s VALUES(%s);", tn, v)
                 _, err = tx.Exec(st, p...)
                 if err != nil {
                         _ = tx.Rollback()
-                        panic(err)
+                        fmt.Println("* row: ", rn)
+                        return err
                 }
 
                 if err := tx.Commit(); err != nil {
-                        panic(err)
+                        return err      
                 }
-
                 rn++
         }
 
-        db.Close()
-}
+        // Finished
+        fmt.Println(fmt.Sprintf("%s rows processed %d", filepath, rn))
 
+        return db.Close()
+}
 
 type root struct {}
 type data struct {}
 
-// TODO Make a different type for finishes, key pair? 
+// TODO Make a different type for position, key pair? 
+// FI - int
+// PU - NULL
+// UR - NULL
+// DSQ - NULL
 func (p *root) position(s string) string {
         if s == "PU" { // pulled up
                 return strconv.Itoa(-1)
