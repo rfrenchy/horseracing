@@ -9,6 +9,7 @@ import (
   "os"
   "strings"
 
+  "github.com/urface/cli/v2"
   _ "github.com/lib/pq"
 )
 
@@ -36,7 +37,7 @@ func main() {
 
         // Read CSV into var
 //        path := "./lingfield_2023_flat_no_title.csv"
-        path := "./temp/2021.csv"
+        path := "./temp/2020.csv"
         d, err := os.ReadFile(path)
         if err != nil {
                 panic(err)
