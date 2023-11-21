@@ -153,14 +153,16 @@ func run(commit bool, filepath string) error {
 type root struct{}
 
 func (p *root) position(s string) string {
-        if s == "PU" { // pulled up
-                return strconv.Itoa(-1)
-        } else if s == "UR" {
-                return strconv.Itoa(-2)
-        } else if s == "DSQ" {
-                return strconv.Itoa(-3)
+        switch s {
+                default:    return s
+                case "PU":  return strconv.Itoa(-1) // (Pulled up i.e. injury/issue)
+                case "UR":  return strconv.Itoa(-2) // (Unseated Rider)
+                case "DSQ": return strconv.Itoa(-3) // (Disqualified)
+                case "SU":  return strconv.Itoa(-4) // 
+                case "F":   return strconv.Itoa(-5) // (Fell)
+                case "RR":  return strconv.Itoa(-6) // (Refused to Race)
+                case "BD":  return strconv.Itoa(-7) // (Brought down)
         }
-        return s
 }
 
 func (p *root) ovrbtn(s string) string {

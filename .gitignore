@@ -1,0 +1,6 @@
+temp
+log.txt
+err.txt
+tools/rpscrape/data/**/*
+tools/rpscrape/racecards/**/*
+
