@@ -1,0 +1,48 @@
+CREATE TYPE position AS (
+        placement_type VARCHAR(2),
+        placement smallint
+);
+
+
+CREATE TABLE result (
+  "date" DATE,
+  region VARCHAR(20), 
+  course VARCHAR(255),
+  off VARCHAR(100),
+  race_name TEXT,
+  type VARCHAR(10),
+  class VARCHAR(10),
+  pattern VARCHAR(255),
+  rating_band VARCHAR(255),
+  age_band VARCHAR(255),
+  sex_rest VARCHAR(255),
+  dist VARCHAR(255),
+  dist_f VARCHAR(255),
+  dist_m smallint,
+  going VARCHAR(255),
+  ran real,
+  num real,
+  pos position,
+  draw real,
+  ovr_btn real,
+  btn real,
+  horse VARCHAR(255),
+  age real,
+  sex VARCHAR(3),
+  lbs smallint,
+  hg VARCHAR(255),
+  time INTERVAL,
+  secs INTERVAL,
+  "dec" VARCHAR(255),
+  jockey VARCHAR(255),
+  trainer VARCHAR(255),
+  prize NUMERIC(10,5),
+  "or" VARCHAR(10),
+  rpr real, -- *1 RPR (Racing Post Rating) is a numerical assessment given by The Racing Post.
+  sire VARCHAR(255),
+  dam VARCHAR(255),
+  damsire VARCHAR(255),
+  owner VARCHAR(255),
+  "comment" TEXT
+);
+

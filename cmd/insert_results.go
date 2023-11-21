@@ -27,12 +27,12 @@ import (
   **********************************************
 */
 func main() {
-        var commit bool
+        var commit bool // TODO change to string flag  (raw | lingfield | result)
         var filepath string
 
         app := &cli.App{
                 Name: "Result Insert",
-                Usage: "Extracts data from a csv from rpscrape, transform it into something insertable into local PostgresDB",
+                Usage: "Extracts and processes horse-racing results CSV, inserts into PostresDB",
                 Action: func(*cli.Context) error {
                         
                         return run(commit, filepath)                
@@ -61,6 +61,11 @@ func main() {
         }
 }
 
+type runargs struct {
+        filepath string
+        table string
+}
+
 func run(commit bool, filepath string) error {
 
         // Open DB connection
@@ -79,13 +84,12 @@ func run(commit bool, filepath string) error {
         r := csv.NewReader(strings.NewReader(string(d)))
         rn := 1
 
-        tn := "temp"
-        if commit {
-                tn = "lingfield"
-        }
+        // flag := false
+        // var st string
 
         // Process CSV
         for {
+                
                 record, err := r.Read()
                 if err == io.EOF {
                         break;
@@ -120,8 +124,12 @@ func run(commit bool, filepath string) error {
                         }
                 }
 
-                // TODO only need to do this once
+                // TODO only need to do this once, 
                 v := strings.TrimRight(sb.String(), ",") // remove trailing comma
+                tn := "temp"
+                if commit {
+                        tn = "lingfield"
+                }
                 st := fmt.Sprintf("INSERT INTO %s VALUES(%s);", tn, v)
                 _, err = tx.Exec(st, p...)
                 if err != nil {
@@ -142,14 +150,8 @@ func run(commit bool, filepath string) error {
         return db.Close()
 }
 
-type root struct {}
-type data struct {}
+type root struct{}
 
-// TODO Make a different type for position, key pair? 
-// FI - int
-// PU - NULL
-// UR - NULL
-// DSQ - NULL
 func (p *root) position(s string) string {
         if s == "PU" { // pulled up
                 return strconv.Itoa(-1)

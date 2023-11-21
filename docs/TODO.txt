@@ -19,3 +19,13 @@ x add cli to script !
 x make go script take filepath arg
 x make go script take table name arg (2 args, temp | result)
 - map column ints to names (no magic numbers in script)
+
+- get migration working
+
+- create script to run against all csvs (xargs ?)
+x remove first header line csvs (sed -i '1d' xxx) !
+
+- self hosted github actions runner
+  - https://docs.github.com/en/actions/hosting-your-own-runners/managing-self-hosted-runners/about-self-hosted-runners
+  - setup routine actions to run scripts??: 
+  - just have a cronjob?
