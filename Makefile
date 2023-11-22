@@ -1,3 +1,12 @@
+.PHONY: help
+
+GBK := $(shell cat './tools/rpscrape/courses/_courses' | jq '.gb' | jq -c 'to_entries[] | [.key] | .[]')
+
+GBV := $(shell cat './tools/rpscrape/courses/_courses' | jq '.gb' | jq -c 'to_entries[] | [.value] | .[]')
+
+help: 
+	@echo "TODO help"
+
 courses: 
 	cat ./tools/rpscrape/courses/_courses
 
@@ -17,3 +26,6 @@ newmarket:
 
 vpn: 
 	sudo openvpn --data-ciphers 'AES-256-CBC' --auth-nocache --config /etc/openvpn/ovpn_tcp/uk2287.nordvpn.com.tcp.ovpn
+
+scrape-gb-flat:
+	./scripts/scrape.sh
