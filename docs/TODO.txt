@@ -22,8 +22,22 @@ x make go script take table name arg (2 args, temp | result)
 
 - get migration working
 
-- create script to run against all csvs (xargs ?)
+x create script to run against all csvs (xargs ?)
 x remove first header line csvs (sed -i '1d' xxx) !
+
+LET DATA ANALYSIS INFORM HOW TO DESIGN MODELLING
+
+- make script to:
+        - connect to different VPN
+        - scrape data for x year for COURSE
+        - disconnect VPN
+        - repeat for next x year
+        - x range: 2008-2023
+        - only for FLAT
+        - *maybe have to move csv to /data/courses/COURSE rather than /data/all/...
+
+- get descriptive stats via python from current unfinished data
+
 
 - self hosted github actions runner
   - https://docs.github.com/en/actions/hosting-your-own-runners/managing-self-hosted-runners/about-self-hosted-runners
