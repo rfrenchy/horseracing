@@ -84,10 +84,12 @@ func run(commit bool, filepath string) error {
         r := csv.NewReader(strings.NewReader(string(d)))
         rn := 1
 
-        // flag := false
-        // var st string
+        // Skip header line
+        _, err = r.Read()
+        if err != nil {
+                return err;
+        }
 
-        // Process CSV
         for {
                 
                 record, err := r.Read()
