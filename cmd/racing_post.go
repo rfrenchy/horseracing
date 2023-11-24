@@ -6,20 +6,47 @@ import (
   "encoding/json"
   "strconv"
   "fmt"
+
+  "github.com/urfave/cli/v2"
 )
 
+var filepath string
+
 func main() {
+        app := &cli.App{
+                Name: "Racingpost",
+                Usage: "Download data from https://www.racingpost.com/",
+                Flags: 
+                        []cli.Flag{
+                                &cli.StringFlag{
+                                        Name: "filepath",
+                                        Aliases: []string{"f"},
+                                        Usage: "path to json containing params of what to download",
+                                        Destination: &filepath,
+                                },
+                        },
+                Action: func(*cli.Context) error {                        
+                        return run()                
+                },
+        }
+
+        if err := app.Run(os.Args); err != nil {
+                panic(err)
+        }
+}
+
+func run() error {
         fmt.Println("Scraping...")
 
-        js, err := os.ReadFile("./scripts/flat.json")
+        js, err := os.ReadFile(filepath)
         if err != nil {
-                panic(err)
+                return err
         }
 
         var courses map[int]interface{}
         err = json.Unmarshal(js, &courses)
         if err != nil {
-                panic(err)
+                return err
         }
 
         yearRange := []int{2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023}
@@ -29,7 +56,7 @@ func main() {
                 fp := fmt.Sprintf("tools/rpscrape/data/courses/%s/flat", c)
                 err = os.MkdirAll(fp, 0755)
                 if err != nil {
-                        panic(err)
+                        return err
                 }
 
                 for _, yr := range yearRange {
@@ -42,7 +69,7 @@ func main() {
                         cmd.Dir = "/home/ryan/dev/horse_racing/tools/rpscrape/scripts/" 
 
                         if err := cmd.Run(); err != nil {
-                                panic(err)
+                                return err
                         }
 
                         err = os.Rename(
@@ -50,9 +77,11 @@ func main() {
                                 fmt.Sprintf("%s/%d.csv", fp, yr))
 
                         if err != nil {
-                                panic(err)
+                                return err
                         }
                 }
         }
+
+        return nil
 }
 

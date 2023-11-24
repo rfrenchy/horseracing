@@ -130,14 +130,25 @@ func run(commit bool, filepath string) error {
                 v := strings.TrimRight(sb.String(), ",") // remove trailing comma
                 tn := "temp"
                 if commit {
-                        tn = "lingfield"
+                        tn = "lingfield" // TODO get proper table name
                 }
                 st := fmt.Sprintf("INSERT INTO %s VALUES(%s);", tn, v)
                 _, err = tx.Exec(st, p...)
                 if err != nil {
                         _ = tx.Rollback()
-                        fmt.Println("* row: ", rn)
-                        return err
+                        fmt.Println("* error row:", rn)
+                        e := err
+                        f, err := os.OpenFile("err.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	                if err != nil {
+		                return err
+	                }
+                        defer f.Close()
+
+                        if _, err = f.WriteString(fmt.Sprintf("%d:%s\n%v\n", rn, e, record)); err != nil {
+                                return err
+                        }
+                        rn++
+                        continue
                 }
 
                 if err := tx.Commit(); err != nil {

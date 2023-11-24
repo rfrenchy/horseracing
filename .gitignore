@@ -1,6 +1,6 @@
-temp
-log.txt
-err.txt
+**/temp.*
+**/log.*
+**/err.*
 tools/rpscrape/data/**/*
 tools/rpscrape/racecards/**/*
 

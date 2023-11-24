@@ -59,8 +59,5 @@ insert-york:
 racecard-today: 
 	cd ./tools/rpscrape/scripts; ./racecards.py today
 
-newmarket:
-	cd ./tools/rpscrape/scripts; ./rpscrape.py -c 38 -y 2020-2023 -t flat
-
 scrape:
-	go run scripts/racing_post.go
+	go run cmd/racing_post.go
