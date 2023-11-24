@@ -38,6 +38,7 @@ LET DATA ANALYSIS INFORM HOW TO DESIGN MODELLING
 
 - get descriptive stats via python from current unfinished data
 
+https://github.com/gonum/plot
 
 - self hosted github actions runner
   - https://docs.github.com/en/actions/hosting-your-own-runners/managing-self-hosted-runners/about-self-hosted-runners

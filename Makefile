@@ -6,15 +6,54 @@ help:
 courses: 
 	cat ./tools/rpscrape/courses/_courses
 
-temp-insert-aintree:
-	realpath tools/rpscrape/data/courses//Aintree/flat/* | xargs -L1 go run cmd/insert_results.go -f 2>&1 | tee log.txt
+insert-aintree:
+	realpath tools/rpscrape/data/courses/Aintree/flat/* | \
+	xargs -L1 go run cmd/insert_results.go -c -f 2>&1 | \
+	tee log.txt
 
-temp-insert-ascot:
-	realpath tools/rpscrape/data/courses//Ascot/flat/* | xargs -L1 go run cmd/insert_results.go -f 2>&1 | tee log.txt
+insert-ascot:
+	realpath tools/rpscrape/data/courses/Ascot/flat/* | \
+	xargs -L1 go run cmd/insert_results.go -c -f 2>&1 | \
+	tee log.txt
 
-newmarket-insert-temp:
+insert-bangor:
+	realpath tools/rpscrape/data/courses/Bangor-on-Dee/flat/* | \
+	xargs -L1 go run cmd/insert_results.go -c -f 2>&1 | \
+	tee log.txt
+
+insert-doncaster:
+	realpath tools/rpscrape/data/courses/Doncaster/flat/* | \
+	xargs -L1 go run cmd/insert_results.go -c -f 2>&1 | \
+	tee log.txt
+
+insert-epsom:
+	realpath tools/rpscrape/data/courses/Epsom/flat/* | \
+	xargs -L1 go run cmd/insert_results.go -c -f 2>&1 | \
+	tee log.txt
+
+insert-goodwood:
+	realpath tools/rpscrape/data/courses/Goodwood/flat/* | \
+	xargs -L1 go run cmd/insert_results.go -c -f 2>&1 | \
+	tee log.txt
+
+insert-lingfield:
+	realpath tools/rpscrape/data/courses/Lingfield/flat/* | \
+	xargs -L1 go run cmd/insert_results.go -c -f 2>&1 | \
+	tee log.txt
+
+insert-newmarket:
 	realpath tools/rpscrape/data/courses/Newmarket/flat/* | \
-	xargs -L1 go run cmd/insert_results.go -f 2>&1 | \
+	xargs -L1 go run cmd/insert_results.go -c -f 2>&1 | \
+	tee log.txt
+
+insert-sandown:
+	realpath tools/rpscrape/data/courses/Sandown/flat/* | \
+	xargs -L1 go run cmd/insert_results.go -c -f 2>&1 | \
+	tee log.txt
+
+insert-york:
+	realpath tools/rpscrape/data/courses/York/flat/* | \
+	xargs -L1 go run cmd/insert_results.go -c -f 2>&1 | \
 	tee log.txt
 
 racecard-today: 
