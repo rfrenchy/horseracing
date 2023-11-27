@@ -10,6 +10,8 @@ import (
   "strings"
 
   "github.com/urfave/cli/v2"
+  "github.com/rs/zerolog"
+  "github.com/rs/zerolog/log"
   _ "github.com/lib/pq"
 )
 
@@ -27,6 +29,9 @@ import (
   **********************************************
 */
 func main() {
+        zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
+        // log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stderr})      
+
         var commit bool // TODO change to string flag  (raw | lingfield | result)
         var filepath string
 
@@ -57,6 +62,7 @@ func main() {
                 }
 
         if err := app.Run(os.Args); err != nil {
+                log.Panic().Err(err).Msg("panicing")
                 panic(err)
         }
 }
@@ -67,7 +73,6 @@ type runargs struct {
 }
 
 func run(commit bool, filepath string) error {
-
         // Open DB connection
         cs := "postgresql://localhost/horse_racing?sslmode=disable"
         db, err := sql.Open("postgres", cs)
@@ -78,7 +83,7 @@ func run(commit bool, filepath string) error {
         // Read CSV 
         d, err := os.ReadFile(filepath)
         if err != nil {
-                panic(err)
+                return err
         }
   
         r := csv.NewReader(strings.NewReader(string(d)))
@@ -116,7 +121,9 @@ func run(commit bool, filepath string) error {
                        
                         switch i {
                                 default: p[i] = x
+                                case 16: p[i] = pr.num(x)
                                 case 17: p[i] = pr.position(x)
+                                case 18: p[i] = pr.draw(x)
                                 case 19: p[i] = pr.ovrbtn(x) 
                                 case 20: p[i] = pr.btn(x) 
                                 case 26: p[i] = pr.time(x)
@@ -132,25 +139,24 @@ func run(commit bool, filepath string) error {
                 if commit {
                         tn = "lingfield" // TODO get proper table name
                 }
+
+                // EXEC
                 st := fmt.Sprintf("INSERT INTO %s VALUES(%s);", tn, v)
                 _, err = tx.Exec(st, p...)
                 if err != nil {
                         _ = tx.Rollback()
-                        fmt.Println("* error row:", rn)
-                        e := err
-                        f, err := os.OpenFile("err.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
-	                if err != nil {
-		                return err
-	                }
-                        defer f.Close()
 
-                        if _, err = f.WriteString(fmt.Sprintf("%d:%s\n%v\n", rn, e, record)); err != nil {
-                                return err
-                        }
+                        log.Error().
+                                Err(err).
+                                Int("row", rn).
+                                Interface("params", p).
+                                Msg("SKIPPING ROW")
+
                         rn++
                         continue
                 }
 
+                // COMMIT
                 if err := tx.Commit(); err != nil {
                         return err      
                 }
@@ -165,17 +171,35 @@ func run(commit bool, filepath string) error {
 
 type root struct{}
 
+// TODO, change to string and/or nil?
+func (p *root) num(s string) string {
+        if s == "" {
+                return strconv.Itoa(0) // blank?
+        }
+        return s
+}
+// Abbreviations help - https://help.racingpost.com/hc/en-us/articles/115001699689-Abbreviations-on-the-racecard
 func (p *root) position(s string) string {
         switch s {
-                default:    return s
-                case "PU":  return strconv.Itoa(-1) // (Pulled up i.e. injury/issue)
-                case "UR":  return strconv.Itoa(-2) // (Unseated Rider)
-                case "DSQ": return strconv.Itoa(-3) // (Disqualified)
-                case "SU":  return strconv.Itoa(-4) // 
-                case "F":   return strconv.Itoa(-5) // (Fell)
-                case "RR":  return strconv.Itoa(-6) // (Refused to Race)
-                case "BD":  return strconv.Itoa(-7) // (Brought down)
+                default:     return s
+                case "PU":   return strconv.Itoa(-1) // (Pulled up i.e. injury/issue)
+                case "UR":   return strconv.Itoa(-2) // (Unseated Rider)
+                case "DSQ":  return strconv.Itoa(-3) // (Disqualified)
+                case "SU":   return strconv.Itoa(-4) // ?
+                case "F":    return strconv.Itoa(-5) // (Fell)
+                case "RR":   return strconv.Itoa(-6) // (Refused to Race)
+                case "BD":   return strconv.Itoa(-7) // (Brought down)
+                case "LFT":  return strconv.Itoa(-8) // ?
+                case "RO":   return strconv.Itoa(-9) // (Refused to Race?)
         }
+}
+
+// TODO, change to string and/or nil?
+func (p *root) draw(s string) string {
+        if s == "" {
+                return strconv.Itoa(0) // blank?
+        }
+        return s
 }
 
 func (p *root) ovrbtn(s string) string {

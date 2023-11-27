@@ -1,6 +1,10 @@
+**/scratch.go
 **/temp.*
 **/log.*
+**/*.log
 **/err.*
 tools/rpscrape/data/**/*
 tools/rpscrape/racecards/**/*
 
+tags
+.tags

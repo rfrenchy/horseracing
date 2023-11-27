@@ -30,7 +30,7 @@ CREATE TABLE lingfield (
   "dec" VARCHAR(255),
   jockey VARCHAR(255),
   trainer VARCHAR(255),
-  prize NUMERIC(10,5),
+  prize NUMERIC(20,2),
   "or" VARCHAR(10),
   rpr real, -- *1 RPR (Racing Post Rating) is a numerical assessment given by The Racing Post.
   sire VARCHAR(255),
