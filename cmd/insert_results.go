@@ -16,17 +16,9 @@ import (
 )
 
 /**
-  ************ HORSE RACING POSTGRES INSERTER ************
-  
-  - Read a CSV file gathered from rpscrape and insert into lingfield table
-    * lingfield name will be changed soon to course/region
-
-  - On error just panic / don't try and salvage
-    * rollsback error'd transactions though
-
-  - file as input arg?
-
-  **********************************************
+  ************ *********************************** ************
+  - Read a CSV file from rpscrape/racingpost and insert into DB
+  *************************************************************
 */
 func main() {
         zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
@@ -146,9 +138,7 @@ func run(commit bool, filepath string) error {
                 if err != nil {
                         _ = tx.Rollback()
 
-                        log.Error().
-                                Err(err).
-                                Int("row", rn).
+                        log.Error().Err(err).Int("row", rn).
                                 Interface("params", p).
                                 Msg("SKIPPING ROW")
 
@@ -178,6 +168,7 @@ func (p *root) num(s string) string {
         }
         return s
 }
+
 // Abbreviations help - https://help.racingpost.com/hc/en-us/articles/115001699689-Abbreviations-on-the-racecard
 func (p *root) position(s string) string {
         switch s {
@@ -242,4 +233,76 @@ func (p *root) rpr(s string) string {
                 return strconv.Itoa(0)
         } 
         return s
+}
+
+type race struct {
+        race_id int
+        name string
+        date string // date of race
+        region string // region of race
+        course_id int
+        off string // race off time
+        racetype string // type of racing (flat/hurdle/chase etc)
+        class string // race class
+        pattern string // race pattern
+        ratingband string // rating restrictions
+        ageband string // age restrictions
+        sexrest string // sex restrictions
+       
+        distance string // in metres
+        going string // going description
+        surface string // surface turf/dirt/aw
+        ran int // number of runners in race
+}
+
+type course struct {
+        id int
+        name string
+}
+
+type runner struct {
+        horseid int
+        raceid int
+        racecardnumber int
+        position int // finished position
+        draw int // stall number
+        overbeaten int // total number of lengths beaten
+        beaten int // lengths behind nearest horse in front 
+        age string // age of horse
+        weight string // weight in pounds
+        headgear string 
+        time string // time in minutes/seconds
+        odds string // decimal odds 
+        jockeyid int
+        trainerid int
+        prizemoney int 
+        officialrating int
+        rprating int
+        tsrating int
+        ownerid int
+        comment string
+}
+
+type horse struct {
+        id int
+        name string
+        sireid int
+        damsireid int
+        sex string
+}
+
+type jockey struct {
+        id int
+        name string
+}
+
+type trainer struct {
+        id int
+        name string
+}
+
+type owner struct {
+        id int
+        name string
+        silkurl string
 }

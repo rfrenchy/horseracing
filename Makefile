@@ -4,7 +4,7 @@ help:
 	@echo "TODO help"
 
 courses: 
-	cat ./tools/rpscrape/courses/_courses
+	bat ./tools/rpscrape/courses/_courses.json
 
 insert-aintree:
 	realpath tools/rpscrape/data/courses/Aintree/flat/* | \
