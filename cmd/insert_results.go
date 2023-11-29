@@ -236,7 +236,7 @@ func (p *root) rpr(s string) string {
 }
 
 type race struct {
-        race_id int
+        id int
         name string
         date string // date of race
         region string // region of race
@@ -258,11 +258,17 @@ type race struct {
 type course struct {
         id int
         name string
+        region int
+}
+
+type region struct {
+        id int
+        name string
 }
 
 type runner struct {
-        horseid int
-        raceid int
+        horse int
+        race int
         racecardnumber int
         position int // finished position
         draw int // stall number

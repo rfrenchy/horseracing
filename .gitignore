@@ -10,3 +10,5 @@ tags
 .tags
 TODO.txt
 **/notes
+tools/rpscrape/**
+tools/rpscrape
