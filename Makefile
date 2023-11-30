@@ -1,9 +1,9 @@
 .PHONY: help
 
-help: 
+help:
 	@echo "TODO help"
 
-courses: 
+courses:
 	bat ./tools/rpscrape/courses/_courses.json
 
 insert-aintree:
@@ -56,12 +56,11 @@ insert-york:
 	xargs -L1 go run cmd/insert_results.go -c -f 2>&1 | \
 	tee log.txt
 
-migrate: 
+migrate:
 	migrate -source ./db/migrations/* -database postgres://localhost:5432/horse_racing up 2
 
-racecard-today: 
+racecard-today:
 	cd ./tools/rpscrape/scripts; ./racecards.py today
-
 
 racing-post:
 	go run cmd/racing_post.go

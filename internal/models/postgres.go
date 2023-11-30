@@ -1,4 +1,4 @@
-package domain
+package models
 
 type Race struct {
         Id int
@@ -37,15 +37,15 @@ type Runner struct {
         Position int // finished position
         Draw int // stall number
         Overbeaten int // total number of lengths beaten
-        Beaten int // lengths behind nearest horse in front 
+        Beaten int // lengths behind nearest horse in front
         Age string // age of horse at race time
         Weight string // weight in pounds
-        Headgear string 
+        Headgear string
         Time string // time in minutes/seconds
-        Odds string // decimal odds 
+        Odds string // decimal odds
         Jockeyid int
         Trainerid int
-        Prizemoney int 
+        Prizemoney int
         Officialrating int
         RPRating int
         TSrating int

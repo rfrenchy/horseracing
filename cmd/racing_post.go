@@ -1,4 +1,4 @@
-package main 
+package main
 
 import (
   "os"
@@ -16,7 +16,7 @@ func main() {
         app := &cli.App{
                 Name: "Racingpost",
                 Usage: "Download data from https://www.racingpost.com/",
-                Flags: 
+                Flags:
                         []cli.Flag{
                                 &cli.StringFlag{
                                         Name: "filepath",
@@ -25,8 +25,8 @@ func main() {
                                         Destination: &filepath,
                                 },
                         },
-                Action: func(*cli.Context) error {                        
-                        return run()                
+                Action: func(*cli.Context) error {
+                        return run()
                 },
         }
 
@@ -34,6 +34,8 @@ func main() {
                 panic(err)
         }
 }
+
+type runner interface {}
 
 func run() error {
         fmt.Println("Scraping...")
@@ -50,6 +52,7 @@ func run() error {
         }
 
         yearRange := []int{2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023}
+
         for id, c := range courses {
                 fmt.Println(c)
                 // convenient place to move scraped data
@@ -61,19 +64,19 @@ func run() error {
 
                 for _, yr := range yearRange {
                         fmt.Println(yr)
-                        cmd := exec.Command("./rpscrape.py", 
-                                "-c", strconv.Itoa(id), 
-                                "-y", strconv.Itoa(yr), 
+                        cmd := exec.Command("./rpscrape.py",
+                                "-c", strconv.Itoa(id),
+                                "-y", strconv.Itoa(yr),
                                 "-t", "flat")
 
-                        cmd.Dir = "/home/ryan/dev/horse_racing/tools/rpscrape/scripts/" 
+                        cmd.Dir = "/home/ryan/dev/horse_racing/tools/rpscrape/scripts/"
 
                         if err := cmd.Run(); err != nil {
                                 return err
                         }
 
                         err = os.Rename(
-                                fmt.Sprintf("tools/rpscrape/data/all/flat/%d.csv", yr), 
+                                fmt.Sprintf("tools/rpscrape/data/all/flat/%d.csv", yr),
                                 fmt.Sprintf("%s/%d.csv", fp, yr))
 
                         if err != nil {
