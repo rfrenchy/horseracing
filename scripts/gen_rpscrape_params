@@ -1,0 +1,20 @@
+#! /bin/bash
+
+# get all gb course ids from racingpost
+TMP_COURSE=$(mktemp)
+cat tools/rpscrape/courses/_courses | jq -r '.gb | keys[]' > $TMP_COURSE
+
+# create year range we want
+TMP_YEARS=$(mktemp)
+seq 2008 2023 > $TMP_YEARS
+
+# create cartesian product of both then shuffle to look less bait
+join -j 2 $TMP_COURSE $TMP_YEARS | shuf > scripts/rpscrape_params
+
+# echo created file path to stdin
+echo $(pwd)/scripts/rpscrape_params
+
+# clean temp files
+trap "rm $TMP_COURSE; rm $TMP_YEARS" EXIT
+
+# TODO make .gb key a parameter
