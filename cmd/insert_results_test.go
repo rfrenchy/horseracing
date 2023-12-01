@@ -2,8 +2,17 @@ package main
 
 import "testing"
 
-func TestNewHorse(t *testing.T) {
-        h := NewHorse()
+func TestHelloWorld(t *testing.T) {
+        name := "Hello World"
+        if name != "Hello World" {
+                t.Errorf("name = %s; want Hello World", name)
+        }
+}
 
-                h := NewHorse() h := NewHorse()
+func FuzzHorse(f *testing.F) {
+        f.Fuzz(func(t *testing.T, _ []byte) {
+                if 1 == 0 {
+                        f.Errorf("the worlds ending")
+                }
+        })
 }

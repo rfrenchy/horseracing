@@ -8,3 +8,6 @@ seq 2008 2023 > scripts/years
 
 # get cartesian product of both, shuffle
 join -j 2 scripts/gb_course_ids scripts/years | shuf > scripts/rpscrape_params
+
+# echo created file path to stdin
+echo $(pwd)/scripts/rpscrape_params
