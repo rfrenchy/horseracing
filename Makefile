@@ -66,11 +66,11 @@ racecard-today:
 racing-post:
 	go run cmd/racing_post.go
 
-gen-scrape-params: clean-scrape-gen
-	@./scripts/gen_rpscrape_params
+gen-scrape-params-gb: clean-scrape-gen
+	@./scripts/gen_rpscrape_params gb
 
 clean-scrape-gen:
-	@rm -f scripts/rpscrape_params
+	@rm -f scripts/gb_rpscrape
 
 test-insert:
 	go test -v cmd/*_test.go
