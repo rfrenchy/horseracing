@@ -9,6 +9,7 @@ tools/rpscrape/racecards/**/*
 tags
 .tags
 TODO.txt
+todo.txt
 **/notes
 tools/rpscrape/**
 tools/rpscrape

@@ -1,4 +1,5 @@
 .PHONY: help
+.PHONY: gen-scrape-params
 
 help:
 	@echo "TODO help"
@@ -64,3 +65,9 @@ racecard-today:
 
 racing-post:
 	go run cmd/racing_post.go
+
+gen-scrape-params: clean-scrape-gen
+	$(shell ./scripts/gen_rpscrape_params.sh)
+
+clean-scrape-gen:
+	@rm -f scripts/rpscrape_params

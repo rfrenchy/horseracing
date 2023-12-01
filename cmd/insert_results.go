@@ -16,7 +16,7 @@ import (
   _ "github.com/lib/pq"
 )
 
-// Model of Racingpost CSV Record
+// Racingpost CSV Record
 type Record struct {
         // Race information
         RaceDate string                 `csv:"date"`
@@ -150,6 +150,9 @@ type Owner struct {
         Id int
         Name string
         Silkurl string
+}
+
+func init() {
 }
 
 func main() {
