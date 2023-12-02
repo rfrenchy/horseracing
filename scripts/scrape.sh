@@ -14,7 +14,7 @@ function con() {
         sudo openvpn --data-ciphers 'AES-256-CBC' --config /etc/openvpn/ovpn_tcp/$(ls /etc/openvpn/ovpn_tcp | grep -i -e uk | shuf -n 1) --auth-user-pass $1
 }
 
-for x in $@ 
+for x in $@
 do
         con $OUT
         echo $x
