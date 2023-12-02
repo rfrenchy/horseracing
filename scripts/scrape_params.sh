@@ -9,10 +9,7 @@ TMP_YEARS=$(mktemp)
 seq 2008 2023 > $TMP_YEARS
 
 # create cartesian product of both then shuffle to look less bait
-join -j 2 $TMP_COURSE $TMP_YEARS | shuf > scripts/$1_rpscrape
-
-# echo created file path to stdin
-echo $(pwd)/scripts/rpscrape_params
+join -j 2 $TMP_COURSE $TMP_YEARS | shuf
 
 # clean temp files
 trap "rm $TMP_COURSE; rm $TMP_YEARS" EXIT

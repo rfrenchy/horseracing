@@ -26,8 +26,8 @@ func main() {
         var filepath string
 
         app := &cli.App{
-                Name: "Inserter-Racingpost",
-                Usage: "Extracts and processes horse-racing CSV, inserts into PostresDB",
+                Name: "Punting",
+                Usage: "",
                 Action: func(*cli.Context) error {
 
                         return run(commit, filepath)

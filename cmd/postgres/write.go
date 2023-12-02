@@ -1,5 +1,9 @@
 package postgres
 
+type Write struct {
+
+}
+
 type root struct{}
 
 // func Horse(r RacingPostRecord) error {}
