@@ -9,9 +9,21 @@ TMP_YEARS=$(mktemp)
 seq 2008 2023 > $TMP_YEARS
 
 # create cartesian product of both then shuffle to look less bait
-join -j 2 $TMP_COURSE $TMP_YEARS | shuf
+mkfifo params
+join -j 2 $TMP_COURSE $TMP_YEARS | shuf > params &
 
 # clean temp files
-trap "rm $TMP_COURSE; rm $TMP_YEARS" EXIT
+clean() {
+        rm $TMP_COURSE
+        rm $TMP_YEARS
+        unlink params
+}
+
+
+cat params
+
+trap clean EXIT
 
 # TODO make so each line an rpscrape command i.e. rpscrape -c $1 -y $2 -t flat
+# TODO intersperse with vpn connect/disconnect every x(10?) lines
+# use AWK?
