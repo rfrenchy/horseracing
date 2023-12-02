@@ -1,6 +1,9 @@
+// TODO, CHANGE INTO MIRGATE GO SQL SCRIPT
+// TODO, CHANGE TABLE TO BE CORRECT
+// TODO, CREATE RAW TABLE
 CREATE TABLE lingfield (
   "date" DATE,
-  region VARCHAR(20), 
+  region VARCHAR(20),
   course VARCHAR(255),
   off VARCHAR(100),
   race_name TEXT,

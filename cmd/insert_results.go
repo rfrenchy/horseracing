@@ -132,10 +132,6 @@ type Horse struct {
         Sex string
 }
 
-func NewHorse(r *Record) *Horse {
-
-}
-
 type Jockey struct {
         Id int
         Name string
