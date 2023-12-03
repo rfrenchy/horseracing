@@ -12,7 +12,7 @@ type root struct{}
 // func Owner(r RacingPostRecord) error {}
 // func Runner(r RacingPostRecord) error {}
 
-func RacingPostRecord(f *File) error {
+func RacingPost(f *File) error {
 	records := []*RacingPostRecord{}
 	if err := gocsv.UnmarshalFile(csv, &records); err != nil {
 		return err

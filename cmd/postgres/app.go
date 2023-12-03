@@ -26,7 +26,7 @@ func main() {
         var filepath string
 
         app := &cli.App{
-                Name: "Punting",
+                Name: "hrpg",
                 Usage: "",
                 Action: func(*cli.Context) error {
 
@@ -77,6 +77,6 @@ func run(commit bool, filepath string) error {
         }
         defer csv.Close()
 
-        return write.RacingPostRecord(f)
+        return write.RacingPost(f)
 }
 

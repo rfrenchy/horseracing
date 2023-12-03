@@ -16,5 +16,8 @@ scrape-results-gb:
 tags:
 	gotags
 
+readme:
+	llll --no-permissions --no-filesize --no-user --no-time --icons=always --git-ignore > README.md
+
 test:
 	go test -v cmd/*_test.go
