@@ -17,7 +17,7 @@ tags:
 	gotags
 
 readme:
-	llll --no-permissions --no-filesize --no-user --no-time --icons=always --git-ignore > README.md
+	eza --long --tree --level 4 -I tools --no-permissions --no-filesize --no-user --no-time --git-ignore | svgbob > assets/structure.svg
 
 test:
 	go test -v cmd/*_test.go
