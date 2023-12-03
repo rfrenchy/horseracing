@@ -1,8 +1,6 @@
 # Horse Racing
 
-<p>Knowledge gain on making horse racing punts</p>
-<p>Aim to pull down and analyse horse racing data</p>
-<p>Improve skills with golang, postgres admin, scripting, and data analysis</p>
+<p>The project's main aim is to gain knowledge on making successful horse racing punts. This is done through obtaining & storing horse racing data in order to perform relevant analysis.</p> 
 
 ## apps
 
@@ -12,13 +10,13 @@ TODO
 
 ### postgres
 
-- [ ] write racingpost csv
-- [ ] read modelled horse racing data
-- [ ] full migration
+- [ ] Write Racingpost CSV
+- [ ] Read Modelled Horse-racing Data
+- [ ] Full Migration
 
 ### scrape
 
-- [ ] obtain racingpost data
+- [ ] Obtain Racingpost Data
 
 ## dir
 
