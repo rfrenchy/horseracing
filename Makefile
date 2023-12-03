@@ -17,7 +17,7 @@ tags:
 	gotags
 
 readme:
-	eza --long --tree --level 4 -I tools --no-permissions --no-filesize --no-user --no-time --git-ignore | svgbob > assets/structure.svg
+	eza --long --tree --level 4 -I tools --no-permissions --no-filesize --no-user --no-time --git-ignore | svgbob --scale 2 > assets/structure.svg
 
 test:
 	go test -v cmd/*_test.go
