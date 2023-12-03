@@ -1,5 +1,9 @@
 # Horse Racing
 
+- knowledge gain on making horse racing punts
+- aim to pull down and analyse horse racing data 
+- improve skills with golang, postgres admin, scripting, and data analysis
+
 ## apps
 
 ### analysis
