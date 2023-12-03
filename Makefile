@@ -1,6 +1,12 @@
 .PHONY: help
 .PHONY: gen-scrape-params
 
+# README DIR SVG CHECKSUM
+# Should update whenever there's a change to the repository's directory structure
+# e.g rename file/dir, new file/dir, delete file/dir
+# * * *  Does NOT Update ON Change in File Contents * * *
+RDM_DIR_CKSUM="123456789 123"
+
 help:
 	@echo "TODO help"
 
@@ -17,7 +23,7 @@ tags:
 	gotags
 
 readme:
-	eza --long --tree --level 4 -I tools --git-ignore --no-user --no-time | svgbob --scale 1.5 --font-size 21 --font-family 'courier new' --background transparent > assets/structure.svg
+	eza --long --tree --level 4 -I tools --git-ignore --no-user --no-time | svgbob --scale 1.5 --font-size 21 --font-family 'courier new' --background transparent > assets/dir.svg
 
 test:
 	go test -v cmd/*_test.go

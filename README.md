@@ -20,4 +20,4 @@ TODO
 
 ## dir
 
-![dir](/assets/structure.svg)
+![dir](/assets/dir.svg)
