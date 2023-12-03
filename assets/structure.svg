@@ -11,7 +11,7 @@
 .svgbob text {
   white-space: pre;
   fill: black;
-  font-family: roboto;
+  font-family: courier new;
   font-size: 21px;
 }
 
