@@ -1,20 +1,31 @@
 #! /bin/bash
 
-# Update svg readme asset on
+SVG_DIR_CKSUM='3235076761 15426'
 
 # git status --short
 # D Deleted
 # ?? new/untracked
 # M Modified (not relevant to run this hook
 
-git st --short | grep -e '??' -e 'D'
 
-if git st --short | grep -e 'M' -e 'D' &> /de/null
+# Update README asset on any change to dir structure
+if git st --porcelain -uno | grep -e '^R' -e '^D' -e '^A' &> /dev/null
 then
-        sed -i "s/RDM_DIR_CKSUM=.*/RDM_DIR_CKSUM='$svg_cksum'/" Makefile
-        make readme
+
+        # gen new svg asset
+	eza --long --tree --level 4 -I tools --git-ignore --no-user --no-time | svgbob --scale 1.5 --font-size 21 --font-family 'courier new' --background transparent > assets/dir.svg
+
+
+        sed -i "s/SVG_DIR_CKSUM='3235076761 15426'
+
+        echo 'new svg'
+
+	git add assets/dir.svg githooks/pre-commit
+
+        echo 'git add '
+
+	git commit --amend -C HEAD
+
+        echo 'git ammend'
 fi
 
-# diff <(cat ./assets/dir.svg | cksum) <(cat Makefile | grep -e RDM_DIR_CKSUM= | awk -F '"' '{ print $2 }') &> /dev/null || make readme
-
-# TODO add sed to replace RDM_DIR_CKSUM value
