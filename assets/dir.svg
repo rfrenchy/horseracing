@@ -264,10 +264,10 @@
   <line x1="168" y1="516" x2="180" y2="516" class="solid"></line>
   <text x="171" y="546" >0</text>
   <line x1="168" y1="564" x2="180" y2="564" class="solid"></line>
-  <text x="147" y="594" >207</text>
+  <text x="147" y="594" >569</text>
   <text x="147" y="618" >550</text>
   <text x="135" y="642" >2.6k</text>
-  <text x="147" y="666" >754</text>
+  <text x="147" y="666" >816</text>
   <text x="147" y="690" >509</text>
   <line x1="168" y1="708" x2="180" y2="708" class="solid"></line>
   <text x="147" y="738" >513</text>
@@ -292,11 +292,11 @@
   <text x="315" y="474" >app.go</text>
   <text x="315" y="498" >scrape.sh</text>
   <text x="243" y="522" >config</text>
-  <text x="279" y="546" >postgres.yml</text>
+  <text x="279" y="546" >postgres.yaml</text>
   <text x="243" y="570" >githooks</text>
   <text x="279" y="594" >pre</text>
   <line x1="312" y1="588" x2="324" y2="588" class="solid"></line>
-  <text x="327" y="594" >commit.sh</text>
+  <text x="327" y="594" >commit</text>
   <text x="243" y="618" >go.mod</text>
   <text x="243" y="642" >go.sum</text>
   <text x="243" y="666" >Makefile</text>

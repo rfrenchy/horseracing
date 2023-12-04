@@ -1,4 +1,20 @@
 #! /bin/bash
 
-# Update SVG README Asset WHEN DIRECTORY STRUCTURE CHANGES
-diff <(cat ./assets/dir.svg | cksum) <(cat Makefile | grep -e RDM_DIR_CKSUM= | awk -F '"' '{ print $2 }') &> /dev/null || make readme
+# Update svg readme asset on
+
+# git status --short
+# D Deleted
+# ?? new/untracked
+# M Modified (not relevant to run this hook
+
+git st --short | grep -e '??' -e 'D'
+
+if git st --short | grep -e 'M' -e 'D' &> /de/null
+then
+        sed -i "s/RDM_DIR_CKSUM=.*/RDM_DIR_CKSUM='$svg_cksum'/" Makefile
+        make readme
+fi
+
+# diff <(cat ./assets/dir.svg | cksum) <(cat Makefile | grep -e RDM_DIR_CKSUM= | awk -F '"' '{ print $2 }') &> /dev/null || make readme
+
+# TODO add sed to replace RDM_DIR_CKSUM value
