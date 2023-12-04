@@ -1,4 +1,4 @@
-package main
+package db
 
 import (
   "fmt"
@@ -15,33 +15,20 @@ import (
   _ "github.com/lib/pq"
 )
 
-func init() {
-}
-
 func main() {
         zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
         // log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stderr})
 
-        var commit bool // TODO change to string flag  (raw | lingfield | result)
         var filepath string
 
         app := &cli.App{
-                Name: "hrpg",
+                Name: "db",
                 Usage: "",
                 Action: func(*cli.Context) error {
-
-                        return run(commit, filepath)
+                        return run(filepath)
                 },
                 Flags:
                         []cli.Flag{
-                                &cli.BoolFlag{
-                                        Name: "commit",
-                                        Aliases: []string{"c"},
-                                        Value: false,
-                                        Usage: "insert data into real table rather than temp",
-                                        Destination: &commit,
-                                },
-
                                 &cli.StringFlag{
                                         Name: "filepath",
                                         Aliases: []string{"f"},
@@ -57,15 +44,10 @@ func main() {
         }
 }
 
-type runargs struct {
-        filepath string
-        table string
-}
-
-func run(commit bool, filepath string) error {
+func run(filepath string) error {
         // Open DB connection
-        cs := "postgresql://localhost/horse_racing?sslmode=disable"
-        db, err := sql.Open("postgres", cs)
+        // TODO load from config
+        db, err := sql.Open("postgres", "postgresql://localhost/horse_racing?sslmode=disable")
         if err != nil {
                 panic(err)
         }

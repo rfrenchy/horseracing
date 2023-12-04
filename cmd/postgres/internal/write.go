@@ -1,16 +1,20 @@
-package postgres
+package db
+
+import (
+  "fmt"
+  "strconv"
+  "database/sql"
+  "encoding/csv"
+  "io"
+
+  _ "github.com/lib/pq"
+)
 
 type Write struct {
-
+// db connecion
 }
 
 type root struct{}
-
-// func Horse(r RacingPostRecord) error {}
-// func RawRacingPost(r RacingPostRecord) error {}
-// func RacingPostRecord(f *File) error {}
-// func Owner(r RacingPostRecord) error {}
-// func Runner(r RacingPostRecord) error {}
 
 func RacingPost(f *File) error {
 	records := []*RacingPostRecord{}
@@ -38,6 +42,26 @@ func RacingPost(f *File) error {
                         return err
                 }
         }
+}
+
+func (w *Write) Horse() error {
+
+}
+
+func (w *Write) Owner() error {
+
+}
+
+func (w *Write) Jockey() error {
+
+}
+
+func (w *Write) Race() error {
+
+}
+
+func (w *Write) Runner() error {
+
 }
 
 func (p *root) num(s string) string {
