@@ -10,4 +10,3 @@ then
 	git add assets/dir.svg githooks/pre-commit
 	git commit --no-verify --amend -C HEAD
 fi
-
