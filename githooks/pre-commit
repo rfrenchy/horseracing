@@ -1,9 +1,9 @@
 #! /bin/bash
 
-# Update README asset on any change to dir structure
+# Update README dir svg on change to git repo structure
 if git st --porcelain -uno | grep -e '^R' -e '^D' -e '^A' &> /dev/null
 then
-        # generate asset
+        # generate svg
 	eza --long --tree --level 4 -I tools --git-ignore --no-user --no-time | svgbob --scale 1.5 --font-size 21 --font-family 'courier new' --background transparent > assets/dir.svg
 
         # add to commit
