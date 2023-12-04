@@ -1,6 +1,8 @@
 .PHONY: help
 .PHONY: gen-scrape-params
 
+PG_URL="postgresql://localhost/horse_racing?sslmode=disable"
+
 help:
 	@echo "TODO help"
 
@@ -18,3 +20,9 @@ tags:
 
 test:
 	go test -v cmd/*_test.go
+
+migrate-up:
+	migrate -database ${PG_URL} -path cmd/postgres/migrate up
+
+migrate-down:
+	migrate -database ${PG_URL} -path cmd/postgres/migrate down

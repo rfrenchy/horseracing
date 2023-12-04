@@ -12,7 +12,7 @@ TODO
 
 - [ ] Write Racingpost CSV
 - [ ] Read Modelled Horse-racing Data
-- [ ] Full Migration
+- [x] Full Migration
 
 ### scrape
 

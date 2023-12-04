@@ -33,10 +33,10 @@ CREATE TABLE IF NOT EXISTS course (
         region_id INT REFERENCES region (region_id)
 );
 
-CREATE TABLE IF NOT EXISTS race {
+CREATE TABLE IF NOT EXISTS race (
         race_id INT PRIMARY KEY,
         name VARCHAR(255),
-        'date' DATE,
+        "date" DATE,
         course_id INT REFERENCES course (course_id),
         off_time TIMESTAMP,
         race_type VARCHAR(255),
@@ -49,11 +49,11 @@ CREATE TABLE IF NOT EXISTS race {
         going VARCHAR(255),
         surface VARCHAR(255),
         ran INT
-}
+);
 
-CREATE TABLE IF NOT EXISTS runner {
-        horse_id INT REFERENCES horse (horse_id)
-        race_id INT REFERENCES race (race_id)
+CREATE TABLE IF NOT EXISTS runner (
+        horse_id INT REFERENCES horse (horse_id),
+        race_id INT REFERENCES race (race_id),
         race_card_number INT,
         position INT,
         draw INT,
@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS runner {
         rp_rating REAL,
         ts_rating REAL,
         owner_id INT REFERENCES owner (owner_id),
-        'comment' TEXT
-}
+        "comment" TEXT
+);
 
 COMMIT;
