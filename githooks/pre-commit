@@ -1,7 +1,7 @@
 #! /bin/bash
 
 # Update README dir svg on change to git repo structure
-if git st --porcelain -uno | grep -e '^R' -e '^D' -e '^A' &> /dev/null
+if git st --porcelain -uno | grep -e '^[R|D|A]' &> /dev/null
 then
         # generate svg
 	eza --long --tree --level 4 --ignore-glob="tools|vendor" --git-ignore --no-user --no-time | svgbob --scale 1.5 --font-size 21 --font-family 'courier new' --background transparent > assets/dir.svg
