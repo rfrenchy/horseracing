@@ -1,12 +1,12 @@
 #! /bin/bash
 
 # Update README asset on any change to dir structure
-#if git st --porcelain -uno | grep -e '^R' -e '^D' -e '^A' &> /dev/null
-#then
-#        # generate asset
-#	eza --long --tree --level 4 -I tools --git-ignore --no-user --no-time | svgbob --scale 1.5 --font-size 21 --font-family 'courier new' --background transparent > assets/dir.svg
-#
-#        # add to commit
-#	git add assets/dir.svg githooks/pre-commit
+if git st --porcelain -uno | grep -e '^R' -e '^D' -e '^A' &> /dev/null
+then
+        # generate asset
+	eza --long --tree --level 4 -I tools --git-ignore --no-user --no-time | svgbob --scale 1.5 --font-size 21 --font-family 'courier new' --background transparent > assets/dir.svg
+
+        # add to commit
+	git add assets/dir.svg githooks/pre-commit
 #	git commit --no-verify --amend -C HEAD
-#fi
+fi
