@@ -16,5 +16,5 @@ test:
 	go test -v cmd/*_test.go
 
 migrate:
-	migrate -database ${PG_URL} -path cmd/postgres/migrate up
+	migrate -database "postgresql://localhost/horse_racing?sslmode=disable" -path cmd/postgres/migrate up
 
