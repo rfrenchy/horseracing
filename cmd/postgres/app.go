@@ -1,13 +1,9 @@
 package db
 
 import (
-  "fmt"
-  "strconv"
+  // "fmt"
   "database/sql"
-  "encoding/csv"
-  "io"
   "os"
-  "strings"
 
   "github.com/urfave/cli/v2"
   "github.com/rs/zerolog"
@@ -59,6 +55,8 @@ func run(filepath string) error {
         }
         defer csv.Close()
 
-        return write.RacingPost(f)
+        return nil
+
+        //return write.RacingPost(csv)
 }
 

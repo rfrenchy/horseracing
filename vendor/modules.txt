@@ -3,6 +3,7 @@
 github.com/cpuguy83/go-md2man/v2/md2man
 # github.com/gocarina/gocsv v0.0.0-20231116093920-b87c2d0e983a
 ## explicit; go 1.13
+github.com/gocarina/gocsv
 # github.com/lib/pq v1.10.9
 ## explicit; go 1.13
 github.com/lib/pq

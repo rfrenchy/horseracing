@@ -1,4 +1,4 @@
-package postgres
+package db
 
 type Race struct {
         Id int

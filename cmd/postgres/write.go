@@ -1,67 +1,77 @@
 package db
 
 import (
-  "fmt"
+  //"fmt"
   "strconv"
-  "database/sql"
-  "encoding/csv"
-  "io"
+//  "database/sql"
+//  "encoding/csv"
+  //"io"
+  //"os"
 
+  // "github.com/gocarina/gosv"
   _ "github.com/lib/pq"
 )
 
 type Write struct {
-// db connecion
-}
+//        *DB
+ }
 
 type root struct{}
 
-func RacingPost(f *File) error {
-	records := []*RacingPostRecord{}
-	if err := gocsv.UnmarshalFile(csv, &records); err != nil {
-		return err
-	}
-
-        // start at 1, skip header line
-        for i := 1; i < len(records); i++ {
-                // EXEC
-                st := fmt.Sprintf("INSERT INTO %s VALUES(%s);", tn, v)
-                _, err = tx.Exec(st, p...)
-                if err != nil {
-                        _ = tx.Rollback()
-
-                        log.Error().Err(err).Int("row", i).
-                                Interface("params", p).
-                                Msg("SKIPPING ROW")
-
-                        continue
-                }
-
-                // COMMIT
-                if err := tx.Commit(); err != nil {
-                        return err
-                }
-        }
-}
+// RacingPost writes a raw CSV file to the table
+// func RacingPost(f *File) error {
+// 	records := []*RacingPostRecord{}
+// //	if err := gocsv.UnmarshalFile(csv, &records); err != nil {
+// //		return err
+// //	}
+//
+//         var st string
+//
+//         for i := 0; i < len(records); i++ {
+//                 // Create statement from CSV headers
+//                 if i == 1 {
+//
+//                         st = fmt.Sprintf("INSERT INTO racingpost VALUES(%s);", "hi")
+//                 }
+//
+//                 // EXEC
+//
+//               //  _, err := tx.Exec(st, p...)
+//                 //if err != nil {
+//                        // _ = tx.Rollback()
+//
+//                         //log.Error().Err(err).Int("row", i).
+//                          //       Interface("params", p).
+//                           //      Msg("SKIPPING ROW")
+//
+//                         continue
+//                 //}
+//
+//                 // COMMIT
+//                // if err := tx.Commit(); err != nil {
+//                 //        return err
+//                 //}
+//         }
+// }
 
 func (w *Write) Horse() error {
-
+ return nil
 }
 
 func (w *Write) Owner() error {
-
+return nil
 }
 
 func (w *Write) Jockey() error {
-
+return nil
 }
 
 func (w *Write) Race() error {
-
+return nil
 }
 
 func (w *Write) Runner() error {
-
+return nil
 }
 
 func (p *root) num(s string) string {
@@ -149,4 +159,4 @@ func (p *root) rpr(s string) string {
                //                 case 27: p[i] = pr.seconds(x)
                //                 case 31: p[i] = pr.prize(x)
                //                 case 33: p[i] = pr.rpr(x)
-                        }
+//                        }
