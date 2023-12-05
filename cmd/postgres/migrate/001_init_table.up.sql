@@ -78,6 +78,7 @@ CREATE TABLE IF NOT EXISTS owner (
 
 CREATE TABLE IF NOT EXISTS region (
         region_id INT PRIMARY KEY,
+        region_code VARCHAR(5) NOT NULL,
         name VARCHAR(255) NOT NULL
 );
 

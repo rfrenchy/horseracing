@@ -1,5 +1,7 @@
 BEGIN;
 
+DROP TABLE IF EXISTS racingpost;
+
 DROP TABLE IF EXISTS runner;
 DROP TABLE IF EXISTS race;
 
