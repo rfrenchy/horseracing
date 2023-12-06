@@ -1,3 +1,3 @@
 BEGIN;
-        TRUNCATE region;
+        TRUNCATE course, region CASCADE;
 COMMIT;

@@ -1,6 +1,6 @@
 # Horse Racing
 
-<p>The project's main aim is to gain knowledge on making successful horse racing punts. This is done through obtaining and storing horse racing data in order to perform relevant analysis. Secondary aims are to improve my skills in golang, db admin, scripting and pattern recognition</p> 
+<p>Obtain, store and analyse Horse Racing data in order to make high yield / low risk punts</p>
 
 ## apps
 

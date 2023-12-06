@@ -1,0 +1,15 @@
+#! /bin/bash
+
+# skip 'all' at 0 index i.e. start at index 1
+
+json=$(cat tools/rpscrape/courses/_temp | jq "to_entries")
+
+for index in $(seq 1 52)
+do
+       echo $json | jq ".[$index] | .value" \
+                | sed 's/[{,}]//gm;s/:/,/gm;s/"//;s/"//' \
+                | sed '/^$/d' \
+                | awk -v i="$index" '{ print $0 ",", i }'
+
+done
+
