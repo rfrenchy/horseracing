@@ -1,6 +1,6 @@
 # Horse Racing
 
-<p>Obtain, store and analyse Horse Racing data in order to make high yield / low risk punts</p>
+<p>Obtain, store and analyse Horse-racing data to make high yield / low risk punts</p>
 
 ## apps
 
