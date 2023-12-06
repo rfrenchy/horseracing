@@ -1,6 +1,6 @@
 # Punts
 
-<p>Obtain, store and analyse Horse-racing data to make high yield / low risk punts</p>
+<p>Collect, Store and Analyse Horse-racing Data to make High-Yield / Low-Risk Investments</p>
 
 ## apps
 

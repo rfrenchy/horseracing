@@ -141,12 +141,9 @@
   <line x1="72" y1="228" x2="84" y2="228" class="solid"></line>
   <text x="87" y="234" >r</text>
   <line x1="96" y1="228" x2="120" y2="228" class="solid"></line>
-  <text x="3" y="258" >.rw</text>
-  <line x1="36" y1="252" x2="48" y2="252" class="solid"></line>
-  <text x="51" y="258" >rw</text>
-  <line x1="72" y1="252" x2="84" y2="252" class="solid"></line>
-  <text x="87" y="258" >r</text>
-  <line x1="96" y1="252" x2="120" y2="252" class="solid"></line>
+  <text x="3" y="258" >.rwxrwxr</text>
+  <line x1="96" y1="252" x2="108" y2="252" class="solid"></line>
+  <text x="111" y="258" >x</text>
   <text x="3" y="282" >drwxrwxr</text>
   <line x1="96" y1="276" x2="108" y2="276" class="solid"></line>
   <text x="111" y="282" >x</text>
@@ -162,12 +159,9 @@
   <line x1="72" y1="324" x2="84" y2="324" class="solid"></line>
   <text x="87" y="330" >r</text>
   <line x1="96" y1="324" x2="120" y2="324" class="solid"></line>
-  <text x="3" y="354" >.rw</text>
-  <line x1="36" y1="348" x2="48" y2="348" class="solid"></line>
-  <text x="51" y="354" >rw</text>
-  <line x1="72" y1="348" x2="84" y2="348" class="solid"></line>
-  <text x="87" y="354" >r</text>
-  <line x1="96" y1="348" x2="120" y2="348" class="solid"></line>
+  <text x="3" y="354" >drwxrwxr</text>
+  <line x1="96" y1="348" x2="108" y2="348" class="solid"></line>
+  <text x="111" y="354" >x</text>
   <text x="3" y="378" >.rw</text>
   <line x1="36" y1="372" x2="48" y2="372" class="solid"></line>
   <text x="51" y="378" >rw</text>
@@ -192,18 +186,24 @@
   <line x1="72" y1="444" x2="84" y2="444" class="solid"></line>
   <text x="87" y="450" >r</text>
   <line x1="96" y1="444" x2="120" y2="444" class="solid"></line>
-  <text x="3" y="474" >drwxrwxr</text>
-  <line x1="96" y1="468" x2="108" y2="468" class="solid"></line>
-  <text x="111" y="474" >x</text>
+  <text x="3" y="474" >.rw</text>
+  <line x1="36" y1="468" x2="48" y2="468" class="solid"></line>
+  <text x="51" y="474" >rw</text>
+  <line x1="72" y1="468" x2="84" y2="468" class="solid"></line>
+  <text x="87" y="474" >r</text>
+  <line x1="96" y1="468" x2="120" y2="468" class="solid"></line>
   <text x="3" y="498" >.rw</text>
   <line x1="36" y1="492" x2="48" y2="492" class="solid"></line>
   <text x="51" y="498" >rw</text>
   <line x1="72" y1="492" x2="84" y2="492" class="solid"></line>
   <text x="87" y="498" >r</text>
   <line x1="96" y1="492" x2="120" y2="492" class="solid"></line>
-  <text x="3" y="522" >.rwxrwxr</text>
-  <line x1="96" y1="516" x2="108" y2="516" class="solid"></line>
-  <text x="111" y="522" >x</text>
+  <text x="3" y="522" >.rw</text>
+  <line x1="36" y1="516" x2="48" y2="516" class="solid"></line>
+  <text x="51" y="522" >rw</text>
+  <line x1="72" y1="516" x2="84" y2="516" class="solid"></line>
+  <text x="87" y="522" >r</text>
+  <line x1="96" y1="516" x2="120" y2="516" class="solid"></line>
   <text x="3" y="546" >drwxrwxr</text>
   <line x1="96" y1="540" x2="108" y2="540" class="solid"></line>
   <text x="111" y="546" >x</text>
@@ -264,31 +264,31 @@
   <text x="159" y="162" >17</text>
   <text x="159" y="186" >17</text>
   <line x1="168" y1="204" x2="180" y2="204" class="solid"></line>
-  <text x="135" y="234" >1.6k</text>
-  <text x="135" y="258" >1.4k</text>
+  <text x="159" y="234" >15</text>
+  <text x="147" y="258" >641</text>
   <line x1="168" y1="276" x2="180" y2="276" class="solid"></line>
-  <text x="147" y="306" >282</text>
-  <text x="135" y="330" >3.1k</text>
-  <text x="159" y="354" >56</text>
-  <text x="147" y="378" >33k</text>
-  <text x="159" y="402" >11</text>
-  <text x="135" y="426" >4.6k</text>
-  <text x="135" y="450" >4.2k</text>
-  <line x1="168" y1="468" x2="180" y2="468" class="solid"></line>
-  <text x="159" y="498" >15</text>
-  <text x="147" y="522" >641</text>
+  <text x="135" y="306" >1.6k</text>
+  <text x="135" y="330" >1.4k</text>
+  <line x1="168" y1="348" x2="180" y2="348" class="solid"></line>
+  <text x="147" y="378" >282</text>
+  <text x="135" y="402" >3.1k</text>
+  <text x="159" y="426" >56</text>
+  <text x="147" y="450" >33k</text>
+  <text x="159" y="474" >11</text>
+  <text x="135" y="498" >4.6k</text>
+  <text x="135" y="522" >4.2k</text>
   <line x1="168" y1="540" x2="180" y2="540" class="solid"></line>
   <text x="171" y="570" >0</text>
   <line x1="168" y1="588" x2="180" y2="588" class="solid"></line>
-  <text x="147" y="618" >408</text>
+  <text x="147" y="618" >444</text>
   <text x="147" y="642" >550</text>
   <text x="135" y="666" >2.6k</text>
   <text x="147" y="690" >361</text>
-  <text x="147" y="714" >317</text>
+  <text x="147" y="714" >308</text>
   <line x1="168" y1="732" x2="180" y2="732" class="solid"></line>
   <text x="147" y="762" >464</text>
-  <text x="147" y="786" >206</text>
-  <text x="147" y="810" >513</text>
+  <text x="147" y="786" >513</text>
+  <text x="147" y="810" >206</text>
   <text x="243" y="42" >assets</text>
   <text x="279" y="66" >dir.svg</text>
   <text x="243" y="90" >cmd</text>
@@ -296,38 +296,38 @@
   <text x="315" y="138" >analysis.go</text>
   <text x="315" y="162" >app.go</text>
   <text x="315" y="186" >types.go</text>
-  <text x="279" y="210" >postgres</text>
+  <text x="279" y="210" >collectors</text>
   <text x="315" y="234" >app.go</text>
-  <text x="315" y="258" >app</text>
-  <line x1="348" y1="264" x2="360" y2="264" class="solid"></line>
-  <text x="363" y="258" >test.go</text>
-  <text x="315" y="282" >migrate</text>
-  <text x="351" y="306" >001</text>
-  <line x1="384" y1="312" x2="396" y2="312" class="solid"></line>
-  <text x="399" y="306" >init</text>
-  <line x1="444" y1="312" x2="456" y2="312" class="solid"></line>
-  <text x="459" y="306" >table.down.sql</text>
-  <text x="351" y="330" >001</text>
-  <line x1="384" y1="336" x2="396" y2="336" class="solid"></line>
-  <text x="399" y="330" >init</text>
-  <line x1="444" y1="336" x2="456" y2="336" class="solid"></line>
-  <text x="459" y="330" >table.up.sql</text>
-  <text x="351" y="354" >002</text>
-  <line x1="384" y1="360" x2="396" y2="360" class="solid"></line>
-  <text x="399" y="354" >init</text>
-  <line x1="444" y1="360" x2="456" y2="360" class="solid"></line>
-  <text x="459" y="354" >data.down.sql</text>
-  <text x="351" y="378" >002</text>
+  <text x="315" y="258" >racingpost</text>
+  <text x="279" y="282" >postgres</text>
+  <text x="315" y="306" >app.go</text>
+  <text x="315" y="330" >app</text>
+  <line x1="348" y1="336" x2="360" y2="336" class="solid"></line>
+  <text x="363" y="330" >test.go</text>
+  <text x="315" y="354" >migrate</text>
+  <text x="351" y="378" >001</text>
   <line x1="384" y1="384" x2="396" y2="384" class="solid"></line>
   <text x="399" y="378" >init</text>
   <line x1="444" y1="384" x2="456" y2="384" class="solid"></line>
-  <text x="459" y="378" >data.up.sql</text>
-  <text x="315" y="402" >read.go</text>
-  <text x="315" y="426" >types.go</text>
-  <text x="315" y="450" >write.go</text>
-  <text x="279" y="474" >scrape</text>
-  <text x="315" y="498" >app.go</text>
-  <text x="315" y="522" >scrape.sh</text>
+  <text x="459" y="378" >table.down.sql</text>
+  <text x="351" y="402" >001</text>
+  <line x1="384" y1="408" x2="396" y2="408" class="solid"></line>
+  <text x="399" y="402" >init</text>
+  <line x1="444" y1="408" x2="456" y2="408" class="solid"></line>
+  <text x="459" y="402" >table.up.sql</text>
+  <text x="351" y="426" >002</text>
+  <line x1="384" y1="432" x2="396" y2="432" class="solid"></line>
+  <text x="399" y="426" >init</text>
+  <line x1="444" y1="432" x2="456" y2="432" class="solid"></line>
+  <text x="459" y="426" >data.down.sql</text>
+  <text x="351" y="450" >002</text>
+  <line x1="384" y1="456" x2="396" y2="456" class="solid"></line>
+  <text x="399" y="450" >init</text>
+  <line x1="444" y1="456" x2="456" y2="456" class="solid"></line>
+  <text x="459" y="450" >data.up.sql</text>
+  <text x="315" y="474" >read.go</text>
+  <text x="315" y="498" >types.go</text>
+  <text x="315" y="522" >write.go</text>
   <text x="243" y="546" >config</text>
   <text x="279" y="570" >postgres.yaml</text>
   <text x="243" y="594" >githooks</text>
@@ -342,10 +342,10 @@
   <text x="279" y="762" >course</text>
   <line x1="348" y1="768" x2="360" y2="768" class="solid"></line>
   <text x="363" y="762" >gen</text>
-  <text x="279" y="786" >region</text>
-  <line x1="348" y1="792" x2="360" y2="792" class="solid"></line>
-  <text x="363" y="786" >gen</text>
-  <text x="279" y="810" >scrape</text>
+  <text x="279" y="786" >racingpost</text>
+  <text x="279" y="810" >region</text>
+  <line x1="348" y1="816" x2="360" y2="816" class="solid"></line>
+  <text x="363" y="810" >gen</text>
   <g>
     <line x1="198" y1="18" x2="198" y2="732" class="solid"></line>
     <line x1="198" y1="36" x2="228" y2="36" class="solid"></line>
@@ -363,10 +363,10 @@
     <line x1="234" y1="60" x2="264" y2="60" class="solid"></line>
   </g>
   <g>
-    <line x1="234" y1="96" x2="234" y2="468" class="solid"></line>
+    <line x1="234" y1="96" x2="234" y2="276" class="solid"></line>
     <line x1="234" y1="108" x2="264" y2="108" class="solid"></line>
     <line x1="234" y1="204" x2="264" y2="204" class="solid"></line>
-    <line x1="234" y1="468" x2="264" y2="468" class="solid"></line>
+    <line x1="234" y1="276" x2="264" y2="276" class="solid"></line>
   </g>
   <g>
     <line x1="270" y1="120" x2="270" y2="180" class="solid"></line>
@@ -375,25 +375,25 @@
     <line x1="270" y1="180" x2="300" y2="180" class="solid"></line>
   </g>
   <g>
-    <line x1="270" y1="216" x2="270" y2="444" class="solid"></line>
+    <line x1="270" y1="216" x2="270" y2="252" class="solid"></line>
     <line x1="270" y1="228" x2="300" y2="228" class="solid"></line>
     <line x1="270" y1="252" x2="300" y2="252" class="solid"></line>
-    <line x1="270" y1="276" x2="300" y2="276" class="solid"></line>
-    <line x1="270" y1="396" x2="300" y2="396" class="solid"></line>
-    <line x1="270" y1="420" x2="300" y2="420" class="solid"></line>
-    <line x1="270" y1="444" x2="300" y2="444" class="solid"></line>
   </g>
   <g>
-    <line x1="306" y1="288" x2="306" y2="372" class="solid"></line>
-    <line x1="306" y1="300" x2="336" y2="300" class="solid"></line>
-    <line x1="306" y1="324" x2="336" y2="324" class="solid"></line>
-    <line x1="306" y1="348" x2="336" y2="348" class="solid"></line>
-    <line x1="306" y1="372" x2="336" y2="372" class="solid"></line>
-  </g>
-  <g>
-    <line x1="270" y1="480" x2="270" y2="516" class="solid"></line>
+    <line x1="270" y1="288" x2="270" y2="516" class="solid"></line>
+    <line x1="270" y1="300" x2="300" y2="300" class="solid"></line>
+    <line x1="270" y1="324" x2="300" y2="324" class="solid"></line>
+    <line x1="270" y1="348" x2="300" y2="348" class="solid"></line>
+    <line x1="270" y1="468" x2="300" y2="468" class="solid"></line>
     <line x1="270" y1="492" x2="300" y2="492" class="solid"></line>
     <line x1="270" y1="516" x2="300" y2="516" class="solid"></line>
+  </g>
+  <g>
+    <line x1="306" y1="360" x2="306" y2="444" class="solid"></line>
+    <line x1="306" y1="372" x2="336" y2="372" class="solid"></line>
+    <line x1="306" y1="396" x2="336" y2="396" class="solid"></line>
+    <line x1="306" y1="420" x2="336" y2="420" class="solid"></line>
+    <line x1="306" y1="444" x2="336" y2="444" class="solid"></line>
   </g>
   <g>
     <line x1="234" y1="552" x2="234" y2="564" class="solid"></line>
