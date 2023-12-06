@@ -1,4 +1,4 @@
-# Horse Racing
+# Punts
 
 <p>Obtain, store and analyse Horse-racing data to make high yield / low risk punts</p>
 
