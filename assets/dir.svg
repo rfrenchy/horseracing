@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="636" height="888" class="svgbob">
   <style>.svgbob line, .svgbob path, .svgbob circle, .svgbob rect, .svgbob polygon {
-  stroke: black;
+  stroke: #CCC;
   stroke-width: 2;
   stroke-opacity: 1;
   fill-opacity: 1;
@@ -10,14 +10,14 @@
 
 .svgbob text {
   white-space: pre;
-  fill: black;
+  fill: #CCC;
   font-family: courier new;
   font-size: 21px;
 }
 
 .svgbob rect.backdrop {
   stroke: none;
-  fill: transparent;
+  fill: #111;
 }
 
 .svgbob .broken {
@@ -29,12 +29,12 @@
 }
 
 .svgbob .bg_filled {
-  fill: transparent;
+  fill: #111;
   stroke-width: 1;
 }
 
 .svgbob .nofill {
-  fill: transparent;
+  fill: #111;
 }
 
 .svgbob .end_marked_arrow {
@@ -291,7 +291,7 @@
   <line x1="168" y1="588" x2="180" y2="588" class="solid"></line>
   <text x="171" y="618" >0</text>
   <line x1="168" y1="636" x2="180" y2="636" class="solid"></line>
-  <text x="147" y="666" >444</text>
+  <text x="147" y="666" >479</text>
   <text x="147" y="690" >481</text>
   <text x="135" y="714" >2.4k</text>
   <text x="147" y="738" >361</text>

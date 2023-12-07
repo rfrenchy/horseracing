@@ -6,7 +6,7 @@ then
         # generate svg
 	eza --long --tree --level 4 --ignore-glob="tools|vendor" --git-ignore --no-user --no-time \
                 | svgbob --scale 1.5 --font-size 21 --font-family 'courier new' \
-                --background 'grey' --stroke-color 'white' \
+                --background '#111' --stroke-color '#CCC' \
                 > assets/dir.svg
 
         # add to commit
