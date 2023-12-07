@@ -5,7 +5,8 @@ import (
   "database/sql"
   "os"
 
-  "github.com/rfrenchy/punts/repository"
+  // "github.com/rfrenchy/punts/cmd/repository/internal/write"
+
   "github.com/urfave/cli/v2"
   "github.com/rs/zerolog"
   "github.com/rs/zerolog/log"
