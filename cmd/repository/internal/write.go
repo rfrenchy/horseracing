@@ -1,11 +1,10 @@
-package db
+package repository
 
 import (
-  //"fmt"
+  "fmt"
   "strconv"
-//  "database/sql"
+  "database/sql"
 //  "encoding/csv"
-  //"io"
   //"os"
 
   // "github.com/gocarina/gosv"
@@ -13,53 +12,57 @@ import (
 )
 
 type Write struct {
-//        *DB
- }
+        db *sql.DB
+}
+
 
 type root struct{}
 
-// RacingPost writes a raw CSV file to the table
-// func RacingPost(f *File) error {
-// 	records := []*RacingPostRecord{}
-// //	if err := gocsv.UnmarshalFile(csv, &records); err != nil {
-// //		return err
-// //	}
-//
-//         var st string
-//
-//         for i := 0; i < len(records); i++ {
-//                 // Create statement from CSV headers
-//                 if i == 1 {
-//
-//                         st = fmt.Sprintf("INSERT INTO racingpost VALUES(%s);", "hi")
-//                 }
-//
-//                 // EXEC
-//
-//               //  _, err := tx.Exec(st, p...)
-//                 //if err != nil {
-//                        // _ = tx.Rollback()
-//
-//                         //log.Error().Err(err).Int("row", i).
-//                          //       Interface("params", p).
-//                           //      Msg("SKIPPING ROW")
-//
-//                         continue
-//                 //}
-//
-//                 // COMMIT
-//                // if err := tx.Commit(); err != nil {
-//                 //        return err
-//                 //}
-//         }
-// }
+func RacingPost(records []*RacingPostRecord) error {
+        return nil
+       // st := fmt.Sprintf("INSERT INTO racingpost VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33, $34, $35, $36, $37, $38, $39, $40, $41, $42, $43, $44, $45, $46, $47");
+
+       // for i := 0; i < len(records); i++ {
+       //         _, err := tx.Exec(st, p...)
+       //         if err != nil {
+       //                 _ = tx.Rollback()
+
+       //                 log.Error().Err(err).Int("row", i).
+       //                         Interface("params", p).
+       //                         Msg("SKIPPING ROW")
+
+       //                 continue
+       //         }
+
+       //         if err := tx.Commit(); err != nil {
+       //                 return err
+       //         }
+       //  }
+ }
 
 func (w *Write) Horse() error {
  return nil
 }
 
-func (w *Write) Owner() error {
-return nil
+func (w *Write) Owner(r *RacingPostRecord) error {
+        tx, err := w.db.Begin()
+        if err != nil {
+                return err
+        }
+
+        st := fmt.Sprintf("INSERT INTO owner VALUES($1, $2, $3);")
+
+        _, err = tx.Exec(st, r.OwnerID, r.OwnerName, r.SilkURL)
+        if err != nil {
+                _ = tx.Rollback()
+                return err
+        }
+
+        if err := tx.Commit(); err != nil {
+                return err
+        }
+
+        return nil
 }
 
 func (w *Write) Jockey() error {

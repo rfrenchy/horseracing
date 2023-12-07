@@ -1,9 +1,8 @@
-module github.com/rfrenchy/horse_racing
+module github.com/rfrenchy/punts
 
 go 1.21.4
 
 require (
-	github.com/gocarina/gocsv v0.0.0-20231116093920-b87c2d0e983a
 	github.com/lib/pq v1.10.9
 	github.com/rs/zerolog v1.31.0
 	github.com/urfave/cli/v2 v2.25.7

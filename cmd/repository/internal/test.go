@@ -1,4 +1,4 @@
-package db
+package repository
 
 import (
         "testing"
@@ -32,4 +32,18 @@ func TestRacingPostRecord(t *testing.T) {
         // if len(records) < 1 {
         //         t.Error("incorrect total of records unmarshalled")
         // }
+}
+
+func TestOwner(t *testing.T) {
+        f, err := os.CreateTemp("", "")
+        if err != nil {
+                t.Error("unable to create file for testing")
+        }
+        defer os.Remove(f.Name())
+
+        if _, err := f.Write([]byte(csv)); err != nil {
+                t.Error("unable to write to file for testing")
+        }
+
+
 }
