@@ -5,28 +5,57 @@ import (
   "database/sql"
   "os"
 
-  // "github.com/rfrenchy/punts/cmd/repository/internal/write"
 
+  "github.com/gocarina/gocsv"
   "github.com/urfave/cli/v2"
   "github.com/rs/zerolog"
   "github.com/rs/zerolog/log"
   _ "github.com/lib/pq"
 )
 
+
+
+var owner bool
+var jockey bool
+
 func main() {
         zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
         // log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stderr})
+
 
         var filepath string
 
         app := &cli.App{
                 Commands: []*cli.Command{
                         {
-                                Name: "owner",
-                                Aliases: []string{"o"},
-                                Usage: "Add an owner",
+                                Name: "add",
+                                Usage: "Add a record",
+                                Flags: []cli.Flag{
+                                        &cli.StringFlag{
+                                                Name: "file",
+                                                Aliases: []string{"f"},
+                                                Usage: "path to racingpost csv file",
+                                                Destination: &filepath,
+                                        },
+                                        &cli.BoolFlag{
+                                                Name: "owner",
+                                                Aliases: []string{"own"},
+                                                Usage: "Add owners",
+                                                Destination: &owner,
+                                        },
+                                        &cli.BoolFlag{
+                                                Name: "jockey",
+                                                Aliases: []string{"jky"},
+                                                Usage: "Add jockeys",
+                                                Destination: &jockey,
+                                        },
+                                },
                                 Action: func (cCtx *cli.Context) error {
-                                        return addOwner(filepath)
+                                        if filepath == "" {
+                                                panic("path to file required")
+                                        }
+
+                                        return add(filepath)
                                 },
                         },
                 },
@@ -38,7 +67,7 @@ func main() {
         }
 }
 
-func run(filepath string) error {
+func add(filepath string) error {
         // Open DB connection
         db, err := sql.Open("postgres", "postgresql://localhost/horse_racing?sslmode=disable")
         if err != nil {
@@ -51,29 +80,28 @@ func run(filepath string) error {
                 return err
         }
         defer csv.Close()
+
+        write := Write{ db: db }
+
+        records := []*RacingPostRecord{}
+        if err := gocsv.UnmarshalFile(csv, &records); err != nil {
+	        return err
+	}
+
+        for _, r := range records {
+                if owner {
+                        if err := write.Owner(r); err != nil {
+                                return err
+                        }
+                }
+
+                if jockey {
+                        if err := write.Jockey(r); err != nil {
+                                return err
+                        }
+                }
+        }
 
         return nil
-
-        //return write.RacingPost(csv)
-}
-
-func addOwner(filepath string) error {
-        // Open DB connection
-        db, err := sql.Open("postgres", "postgresql://localhost/horse_racing?sslmode=disable")
-        if err != nil {
-                panic(err)
-        }
-        defer db.Close()
-
-        csv, err := os.OpenFile(filepath, os.O_RDWR|os.O_CREATE, 0755)
-        if err != nil {
-                return err
-        }
-        defer csv.Close()
-
-        write := &Write{ db: db, }
-        record := &RacingPostRecord{}
-
-        return write.Owner(record)
 }
 

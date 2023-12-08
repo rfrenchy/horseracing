@@ -1,0 +1,3 @@
+#! /bin/bash
+
+go run ./cmd/repository/... add -jockey -f ./hawkesbury.csv

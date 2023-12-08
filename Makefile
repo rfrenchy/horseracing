@@ -1,5 +1,5 @@
 .PHONY: help
-.PHONY: gen-scrape-params
+.PHONY: repository
 
 PG_URL="postgresql://localhost/horse_racing?sslmode=disable"
 
@@ -17,6 +17,9 @@ tags:
 
 test:
 	go test -v ./cmd/...
+
+repository:
+	./scripts/repository
 
 migrate:
 	migrate -database "postgresql://localhost/horse_racing?sslmode=disable" -path cmd/postgres/migrate up

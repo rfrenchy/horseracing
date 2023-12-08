@@ -1,0 +1,179 @@
+package main
+
+import (
+  "fmt"
+  "strconv"
+  "database/sql"
+
+  _ "github.com/lib/pq"
+)
+
+type Write struct {
+        db *sql.DB
+}
+
+
+type root struct{}
+
+func RacingPost(records []*RacingPostRecord) error {
+        return nil
+       // st := fmt.Sprintf("INSERT INTO racingpost VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33, $34, $35, $36, $37, $38, $39, $40, $41, $42, $43, $44, $45, $46, $47");
+
+       // for i := 0; i < len(records); i++ {
+       //         _, err := tx.Exec(st, p...)
+       //         if err != nil {
+       //                 _ = tx.Rollback()
+
+       //                 log.Error().Err(err).Int("row", i).
+       //                         Interface("params", p).
+       //                         Msg("SKIPPING ROW")
+
+       //                 continue
+       //         }
+
+       //         if err := tx.Commit(); err != nil {
+       //                 return err
+       //         }
+       //  }
+ }
+
+func (w *Write) Horse() error {
+ return nil
+}
+
+func (w *Write) Owner(r *RacingPostRecord) error {
+        tx, err := w.db.Begin()
+        if err != nil {
+                return err
+        }
+
+        st := fmt.Sprintf("INSERT INTO owner VALUES($1, $2, $3) ON CONFLICT DO NOTHING;")
+
+        _, err = tx.Exec(st, r.OwnerID, r.OwnerName, r.SilkURL)
+        if err != nil {
+                _ = tx.Rollback()
+                return err
+        }
+
+        if err := tx.Commit(); err != nil {
+                return err
+        }
+
+        return nil
+}
+
+func (w *Write) Jockey(r *RacingPostRecord) error {
+        tx, err := w.db.Begin()
+        if err != nil {
+                return err
+        }
+
+        st := fmt.Sprintf("INSERT INTO jockey VALUES($1, $2) ON CONFLICT DO NOTHING;")
+
+        _, err = tx.Exec(st, r.JockeyID, r.JockeyName)
+        if err != nil {
+                _ = tx.Rollback()
+                return err
+        }
+
+        if err := tx.Commit(); err != nil {
+                return err
+        }
+
+        return nil
+}
+
+func (w *Write) Race() error {
+return nil
+}
+
+func (w *Write) Runner() error {
+return nil
+}
+
+func (p *root) num(s string) string {
+        if s == "" {
+                return strconv.Itoa(0) // blank?
+        }
+        return s
+}
+
+// Abbreviations help - https://help.racingpost.com/hc/en-us/articles/115001699689-Abbreviations-on-the-racecard
+func (p *root) position(s string) string {
+        switch s {
+                default:     return s
+                case "PU":   return strconv.Itoa(-1) // (Pulled up i.e. injury/issue)
+                case "UR":   return strconv.Itoa(-2) // (Unseated Rider)
+                case "DSQ":  return strconv.Itoa(-3) // (Disqualified)
+                case "SU":   return strconv.Itoa(-4) // ?
+                case "F":    return strconv.Itoa(-5) // (Fell)
+                case "RR":   return strconv.Itoa(-6) // (Refused to Race)
+                case "BD":   return strconv.Itoa(-7) // (Brought down)
+                case "LFT":  return strconv.Itoa(-8) // ?
+                case "RO":   return strconv.Itoa(-9) // (Refused to Race?)
+        }
+}
+
+func (p *root) draw(s string) string {
+        if s == "" {
+                return strconv.Itoa(0) // blank?
+        }
+        return s
+}
+
+func (p *root) ovrbtn(s string) string {
+        if s == "-" {
+                return strconv.Itoa(0)
+        }
+        return s
+}
+
+func (p *root) btn(s string) string {
+        if s == "-" {
+                return strconv.Itoa(0)
+        }
+        return s
+}
+
+func (p *root) time(s string) *string {
+        if s == "-" {
+                return nil
+        }
+        return &s
+}
+
+func (p *root) seconds(s string) *string {
+        if s == "-" {
+                return nil
+        }
+        return &s
+}
+
+func (p *root) prize(s string) string {
+        if s == "" || s == "–" {
+                return strconv.Itoa(0)
+        }
+        return s
+}
+
+func (p *root) rpr(s string) string {
+        if s == "" || s == "–" {
+                return strconv.Itoa(0)
+        }
+        return s
+}
+
+               // for i, x := range record {
+               //         // $1, $2, $3... etc
+               //         switch i {
+               //                 default: p[i] = x
+               //                 case 16: p[i] = pr.num(x)
+               //                 case 17: p[i] = pr.position(x)
+               //                 case 18: p[i] = pr.draw(x)
+               //                 case 19: p[i] = pr.ovrbtn(x)
+               //                 case 20: p[i] = pr.btn(x)
+               //                 case 26: p[i] = pr.time(x)
+               //                 case 27: p[i] = pr.seconds(x)
+               //                 case 31: p[i] = pr.prize(x)
+               //                 case 33: p[i] = pr.rpr(x)
+//                        }
