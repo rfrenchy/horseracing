@@ -1,29 +1,17 @@
 #! /bin/bash
 
-# grab given region course ids from racingpost
-TMP_COURSE=$(mktemp)
-cat tools/rpscrape/courses/_courses | jq -r ".$1 | keys[]" > $TMP_COURSE
+FNAME=$1
+CRS=7
 
-# create year range
-TMP_YEARS=$(mktemp)
-seq 2008 2023 > $TMP_YEARS
+echo > $FNAME
 
-# create cartesian product of both then shuffle to look less bait
-mkfifo params
-join -j 2 $TMP_COURSE $TMP_YEARS | shuf > params &
+seq 2008 2022 | while read Y
+do
+        echo "./rpscrape.py -c $CRS -y $Y -t flat" >> $FNAME
+done
 
-# clean temp files
-clean() {
-        rm $TMP_COURSE
-        rm $TMP_YEARS
-        unlink params
-}
+cat $FNAME | shuf -o $FNAME
 
 
-cat params
-
-trap clean EXIT
-
-# TODO make so each line an rpscrape command i.e. rpscrape -c $1 -y $2 -t flat
 # TODO intersperse with vpn connect/disconnect every x(10?) lines
-# use AWK?
+
