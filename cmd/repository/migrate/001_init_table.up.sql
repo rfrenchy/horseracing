@@ -93,7 +93,7 @@ CREATE TABLE IF NOT EXISTS race (
         name VARCHAR(255),
         "date" DATE,
         course_id INT REFERENCES course (course_id),
-        off_time TIMESTAMP,
+        off_time TIME,
         race_type VARCHAR(255),
         race_class VARCHAR(255),
         pattern VARCHAR(255),
