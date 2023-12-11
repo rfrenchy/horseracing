@@ -14,3 +14,4 @@ todo.txt
 tools/rpscrape/**
 tools/rpscrape
 vendor/**
+data/**

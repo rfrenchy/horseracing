@@ -3,6 +3,7 @@ package main
 import (
   "fmt"
   "strconv"
+  "errors"
   "database/sql"
 
   _ "github.com/lib/pq"
@@ -36,6 +37,18 @@ func RacingPost(records []*RacingPostRecord) error {
        //         }
        //  }
  }
+
+func (w *Write) Add(r *RacingPostRecord) error {
+        err_own := w.Owner(r)
+        err_jky := w.Jockey(r)
+        err_trn := w.Trainer(r)
+        err_hrs := w.Horse(r)
+        err_rce := w.Race(r)
+        err_run := w.Runner(r)
+
+        return errors.Join(err_own, err_jky, err_trn, err_hrs, err_rce, err_run)
+}
+
 
 func (w *Write) Owner(r *RacingPostRecord) error {
         tx, err := w.db.Begin()

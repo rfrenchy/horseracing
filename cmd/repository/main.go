@@ -12,13 +12,6 @@ import (
   _ "github.com/lib/pq"
 )
 
-var owner bool
-var jockey bool
-var trainer bool
-var horse bool
-var race bool
-var runner bool
-
 func main() {
         zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
         // log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stderr})
@@ -37,42 +30,6 @@ func main() {
                                                 Aliases: []string{"f"},
                                                 Usage: "path to racingpost csv file",
                                                 Destination: &filepath,
-                                        },
-                                        &cli.BoolFlag{
-                                                Name: "owner",
-                                                Aliases: []string{"own"},
-                                                Usage: "Add owners",
-                                                Destination: &owner,
-                                        },
-                                        &cli.BoolFlag{
-                                                Name: "jockey",
-                                                Aliases: []string{"jky"},
-                                                Usage: "Add jockeys",
-                                                Destination: &jockey,
-                                        },
-                                        &cli.BoolFlag{
-                                                Name: "trainer",
-                                                Aliases: []string{"trn"},
-                                                Usage: "Add trainers",
-                                                Destination: &trainer,
-                                        },
-                                        &cli.BoolFlag{
-                                                Name: "horse",
-                                                Aliases: []string{"hrs"},
-                                                Usage: "Add horse",
-                                                Destination: &horse,
-                                        },
-                                        &cli.BoolFlag{
-                                                Name: "race",
-                                                Aliases: []string{"rce"},
-                                                Usage: "Add a race",
-                                                Destination: &race,
-                                        },
-                                        &cli.BoolFlag{
-                                                Name: "runner",
-                                                Aliases: []string{"rnr"},
-                                                Usage: "Add a runner",
-                                                Destination: &runner,
                                         },
                                 },
                                 Action: func (cCtx *cli.Context) error {
@@ -114,40 +71,8 @@ func add(filepath string) error {
 	}
 
         for _, r := range records {
-                if owner {
-                        if err := write.Owner(r); err != nil {
-                                return err
-                        }
-                }
-
-                if jockey {
-                        if err := write.Jockey(r); err != nil {
-                                return err
-                        }
-                }
-
-                if trainer {
-                        if err := write.Trainer(r); err != nil {
-                                return err
-                        }
-                }
-
-                if horse {
-                        if err := write.Horse(r); err != nil {
-                                return err
-                        }
-                }
-
-                if race {
-                        if err := write.Race(r); err != nil {
-                                return err
-                        }
-                }
-
-                if runner {
-                        if err := write.Runner(r); err != nil {
-                                return err
-                        }
+                if err := write.Add(r); err != nil {
+                        return err
                 }
         }
 

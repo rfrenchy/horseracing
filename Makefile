@@ -9,7 +9,7 @@ help:
 build:
 	go build ./...
 
-scrape-results-gb:
+scrape:
 	@./scripts/scrape_params.sh gb
 
 tags:
