@@ -291,7 +291,7 @@
   <text x="147" y="258" >641</text>
   <text x="135" y="282" >2.7k</text>
   <line x1="168" y1="300" x2="180" y2="300" class="solid"></line>
-  <text x="135" y="330" >3.4k</text>
+  <text x="135" y="330" >5.1k</text>
   <line x1="168" y1="348" x2="180" y2="348" class="solid"></line>
   <text x="147" y="378" >282</text>
   <text x="135" y="402" >3.1k</text>
@@ -299,8 +299,8 @@
   <text x="147" y="450" >33k</text>
   <text x="159" y="474" >13</text>
   <text x="135" y="498" >1.7k</text>
-  <text x="135" y="522" >4.6k</text>
-  <text x="135" y="546" >4.9k</text>
+  <text x="135" y="522" >4.7k</text>
+  <text x="135" y="546" >6.5k</text>
   <line x1="168" y1="564" x2="180" y2="564" class="solid"></line>
   <text x="171" y="594" >0</text>
   <text x="171" y="618" >0</text>
@@ -316,7 +316,7 @@
   <text x="147" y="858" >464</text>
   <text x="147" y="882" >513</text>
   <text x="147" y="906" >206</text>
-  <text x="159" y="930" >74</text>
+  <text x="159" y="930" >72</text>
   <text x="243" y="42" >assets</text>
   <text x="279" y="66" >dir.svg</text>
   <text x="243" y="90" >cmd</text>

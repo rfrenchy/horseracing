@@ -5,7 +5,6 @@ import (
   "database/sql"
   "os"
 
-
   "github.com/gocarina/gocsv"
   "github.com/urfave/cli/v2"
   "github.com/rs/zerolog"
@@ -13,10 +12,11 @@ import (
   _ "github.com/lib/pq"
 )
 
-
-
 var owner bool
 var jockey bool
+var trainer bool
+var horse bool
+var race bool
 
 func main() {
         zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
@@ -48,6 +48,24 @@ func main() {
                                                 Aliases: []string{"jky"},
                                                 Usage: "Add jockeys",
                                                 Destination: &jockey,
+                                        },
+                                        &cli.BoolFlag{
+                                                Name: "trainer",
+                                                Aliases: []string{"trn"},
+                                                Usage: "Add trainers",
+                                                Destination: &trainer,
+                                        },
+                                        &cli.BoolFlag{
+                                                Name: "horse",
+                                                Aliases: []string{"hrs"},
+                                                Usage: "Add horse",
+                                                Destination: &horse,
+                                        },
+                                        &cli.BoolFlag{
+                                                Name: "race",
+                                                Aliases: []string{"rce"},
+                                                Usage: "Add a race",
+                                                Destination: &race,
                                         },
                                 },
                                 Action: func (cCtx *cli.Context) error {
@@ -97,6 +115,24 @@ func add(filepath string) error {
 
                 if jockey {
                         if err := write.Jockey(r); err != nil {
+                                return err
+                        }
+                }
+
+                if trainer {
+                        if err := write.Trainer(r); err != nil {
+                                return err
+                        }
+                }
+
+                if horse {
+                        if err := write.Horse(r); err != nil {
+                                return err
+                        }
+                }
+
+                if race {
+                        if err := write.Race(r); err != nil {
                                 return err
                         }
                 }

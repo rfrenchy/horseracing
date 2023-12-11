@@ -87,8 +87,8 @@ type RacingPostRecord struct {
         RaceID string                   `csv:"race_id"`
         RaceOfftime string              `csv:"off"`
         RaceName string                 `csv:"race_name"`
-        Racetype string                 `csv:"type"`
-        Raceclass string                `csv:"class"`
+        RaceType string                 `csv:"type"`
+        RaceClass string                `csv:"class"`
         RacePattern string              `csv:"pattern"` // (Group 1 etc)
         RatingbandRestrictions string   `csv:"rating_band"`
         AgebandRestriction string       `csv:"age_band"`
@@ -96,6 +96,7 @@ type RacingPostRecord struct {
         Distance string                 `csv:"dist_m"` // in metres
         Going string                    `csv:"going"` // going description
         Surface string                  `csv:"surface"` // surface Turf/Dirt/AW
+        Ran string                      `csv:"ran"` // number of runners in race
 
         // Specific Runner information
         RacecardNumber string   `csv:"num"`
@@ -113,8 +114,8 @@ type RacingPostRecord struct {
         DecimalOdds string      `csv:"dec"`
         JockeyID string         `csv:"jockey_id"`
         JockeyName string           `csv:"jockey"`
-        TrainerId string        `csv:"trainer_id"`
-        Trainer string          `csv:"trainer"`
+        TrainerID string        `csv:"trainer_id"`
+        TrainerName string          `csv:"trainer"`
         PrizeMoney string       `csv:"prize"`
         OfficialRating string   `csv:"or"`
         RPRRating string        `csv:"rpr"`

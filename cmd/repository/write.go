@@ -37,10 +37,6 @@ func RacingPost(records []*RacingPostRecord) error {
        //  }
  }
 
-func (w *Write) Horse() error {
- return nil
-}
-
 func (w *Write) Owner(r *RacingPostRecord) error {
         tx, err := w.db.Begin()
         if err != nil {
@@ -83,8 +79,68 @@ func (w *Write) Jockey(r *RacingPostRecord) error {
         return nil
 }
 
-func (w *Write) Race() error {
-return nil
+func (w *Write) Trainer(r *RacingPostRecord) error {
+        tx, err := w.db.Begin()
+        if err != nil {
+                return err
+        }
+
+        st := fmt.Sprintf("INSERT INTO trainer VALUES($1, $2) ON CONFLICT DO NOTHING;")
+
+        _, err = tx.Exec(st, r.TrainerID, r.TrainerName)
+        if err != nil {
+                _ = tx.Rollback()
+                return err
+        }
+
+        if err := tx.Commit(); err != nil {
+                return err
+        }
+
+        return nil
+}
+
+func (w *Write) Horse(r *RacingPostRecord) error {
+        tx, err := w.db.Begin()
+        if err != nil {
+                return err
+        }
+
+        st := fmt.Sprintf("INSERT INTO horse VALUES($1, $2, $3) ON CONFLICT DO NOTHING;")
+
+        _, err = tx.Exec(st, r.HorseID, r.HorseName, r.HorseSex)
+        if err != nil {
+                _ = tx.Rollback()
+                return err
+        }
+
+        if err := tx.Commit(); err != nil {
+                return err
+        }
+
+        return nil
+}
+
+func (w *Write) Race(r *RacingPostRecord) error {
+        tx, err := w.db.Begin()
+        if err != nil {
+                return err
+        }
+
+        st := fmt.Sprintf("INSERT INTO race VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15) ON CONFLICT DO NOTHING;")
+
+        _, err = tx.Exec(st, r.RaceID, r.RaceName, r.RaceDate, r.CourseID, r.RaceOfftime, r.RaceType, r.RaceClass, r.RacePattern, r.RatingbandRestrictions, r. AgebandRestriction, r.SexRestriction, r.Distance, r.Going, r.Surface, r.Ran)
+
+        if err != nil {
+                _ = tx.Rollback()
+                return err
+        }
+
+        if err := tx.Commit(); err != nil {
+                return err
+        }
+
+        return nil
 }
 
 func (w *Write) Runner() error {
