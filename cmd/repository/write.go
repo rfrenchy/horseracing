@@ -129,7 +129,7 @@ func (w *Write) Race(r *RacingPostRecord) error {
 
         st := fmt.Sprintf("INSERT INTO race VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15) ON CONFLICT DO NOTHING;")
 
-        _, err = tx.Exec(st, r.RaceID, r.RaceName, r.RaceDate, r.CourseID, r.RaceOfftime, r.RaceType, r.RaceClass, r.RacePattern, r.RatingbandRestrictions, r. AgebandRestriction, r.SexRestriction, r.Distance, r.Going, r.Surface, r.Ran)
+        _, err = tx.Exec(st, r.RaceID, r.RaceName, r.RaceDate, r.CourseID, r.RaceOfftime, r.RaceType, r.RaceClass, r.RacePattern, r.RatingbandRestrictions, r.AgebandRestriction, r.SexRestriction, r.Distance, r.Going, r.Surface, r.Ran)
 
         if err != nil {
                 _ = tx.Rollback()
@@ -143,8 +143,53 @@ func (w *Write) Race(r *RacingPostRecord) error {
         return nil
 }
 
-func (w *Write) Runner() error {
-return nil
+func (w *Write) Runner(r *RacingPostRecord) error {
+        tx, err := w.db.Begin()
+        if err != nil {
+                return err
+        }
+
+        st := fmt.Sprintf("INSERT INTO runner VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20) ON CONFLICT DO NOTHING;")
+
+
+        root := &root{}
+
+        //fmt.Println(r.Overbeaten)
+
+        //return nil
+
+        _, err = tx.Exec(st,
+                r.HorseID,
+                r.RaceID,
+                root.num(r.RacecardNumber),
+                root.position(r.FinishedPosition),
+                root.draw(r.Draw),
+                root.ovrbtn(r.Overbeaten),
+                root.btn(r.Beaten),
+                r.HorseAge,
+                r.HorseWeight,
+                r.Headgear,
+                root.time(r.FinishTime),
+                r.DecimalOdds,
+                r.JockeyID,
+                r.TrainerID,
+                root.prize(r.PrizeMoney),
+                root.rating(r.OfficialRating),
+                root.rating(r.RPRRating),
+                root.rating(r.TSRating),
+                r.OwnerID,
+                r.Comment)
+
+        if err != nil {
+                _ = tx.Rollback()
+                return err
+        }
+
+        if err := tx.Commit(); err != nil {
+                return err
+        }
+
+        return nil
 }
 
 func (p *root) num(s string) string {
@@ -158,35 +203,36 @@ func (p *root) num(s string) string {
 func (p *root) position(s string) string {
         switch s {
                 default:     return s
-                case "PU":   return strconv.Itoa(-1) // (Pulled up i.e. injury/issue)
-                case "UR":   return strconv.Itoa(-2) // (Unseated Rider)
-                case "DSQ":  return strconv.Itoa(-3) // (Disqualified)
-                case "SU":   return strconv.Itoa(-4) // ?
-                case "F":    return strconv.Itoa(-5) // (Fell)
-                case "RR":   return strconv.Itoa(-6) // (Refused to Race)
-                case "BD":   return strconv.Itoa(-7) // (Brought down)
-                case "LFT":  return strconv.Itoa(-8) // ?
-                case "RO":   return strconv.Itoa(-9) // (Refused to Race?)
+                case "":     return ""
+                case "PU":   return "-1" // (Pulled up i.e. injury/issue)
+                case "UR":   return "-2" // (Unseated Rider)
+                case "DSQ":  return "-3" // (Disqualified)
+                case "SU":   return "-4" // ?
+                case "F":    return "-5" // (Fell)
+                case "RR":   return "-6" // (Refused to Race)
+                case "BD":   return "-7" // (Brought down)
+                case "LFT":  return "-8" // ?
+                case "RO":   return "-9" // (Refused to Race?)
         }
 }
 
 func (p *root) draw(s string) string {
         if s == "" {
-                return strconv.Itoa(0) // blank?
+                return "0" // blank?
         }
         return s
 }
 
 func (p *root) ovrbtn(s string) string {
         if s == "-" {
-                return strconv.Itoa(0)
+                return "0"
         }
         return s
 }
 
 func (p *root) btn(s string) string {
         if s == "-" {
-                return strconv.Itoa(0)
+                return "0"
         }
         return s
 }
@@ -207,29 +253,15 @@ func (p *root) seconds(s string) *string {
 
 func (p *root) prize(s string) string {
         if s == "" || s == "–" {
-                return strconv.Itoa(0)
+                return "0"
         }
         return s
 }
 
-func (p *root) rpr(s string) string {
+func (p *root) rating(s string) string {
         if s == "" || s == "–" {
-                return strconv.Itoa(0)
+                return "0"
         }
         return s
 }
 
-               // for i, x := range record {
-               //         // $1, $2, $3... etc
-               //         switch i {
-               //                 default: p[i] = x
-               //                 case 16: p[i] = pr.num(x)
-               //                 case 17: p[i] = pr.position(x)
-               //                 case 18: p[i] = pr.draw(x)
-               //                 case 19: p[i] = pr.ovrbtn(x)
-               //                 case 20: p[i] = pr.btn(x)
-               //                 case 26: p[i] = pr.time(x)
-               //                 case 27: p[i] = pr.seconds(x)
-               //                 case 31: p[i] = pr.prize(x)
-               //                 case 33: p[i] = pr.rpr(x)
-//                        }

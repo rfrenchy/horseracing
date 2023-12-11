@@ -100,7 +100,7 @@ type RacingPostRecord struct {
 
         // Specific Runner information
         RacecardNumber string   `csv:"num"`
-        FinishedPosition string `csv:"position"` // runner finished position
+        FinishedPosition string `csv:"pos"` // runner finished position
         Draw string             `csv:"draw"` // stall number
         Overbeaten string       `csv:"ovr_btn"` // total number of lengths beaten
         Beaten string           `csv:"btn"` // lengths behind nearest horse in front

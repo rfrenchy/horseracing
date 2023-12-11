@@ -17,6 +17,7 @@ var jockey bool
 var trainer bool
 var horse bool
 var race bool
+var runner bool
 
 func main() {
         zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
@@ -66,6 +67,12 @@ func main() {
                                                 Aliases: []string{"rce"},
                                                 Usage: "Add a race",
                                                 Destination: &race,
+                                        },
+                                        &cli.BoolFlag{
+                                                Name: "runner",
+                                                Aliases: []string{"rnr"},
+                                                Usage: "Add a runner",
+                                                Destination: &runner,
                                         },
                                 },
                                 Action: func (cCtx *cli.Context) error {
@@ -133,6 +140,12 @@ func add(filepath string) error {
 
                 if race {
                         if err := write.Race(r); err != nil {
+                                return err
+                        }
+                }
+
+                if runner {
+                        if err := write.Runner(r); err != nil {
                                 return err
                         }
                 }
