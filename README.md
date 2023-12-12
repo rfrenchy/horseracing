@@ -4,7 +4,7 @@
 
 ### analysis
 
-TODO
+- [ ] nearest mean classifier
 
 ### postgres
 
