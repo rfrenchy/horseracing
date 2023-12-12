@@ -9,12 +9,13 @@
 ### postgres
 
 - [x] Write Racingpost CSV
+- [x] Write modelled horse racing
 - [ ] Read Modelled Horse-racing Data
 - [x] Full Migration
 
-### scrape
+### mining
 
-- [x] Obtain Racingpost Data
+- [x] Racingpost
 
 ## dir
 
