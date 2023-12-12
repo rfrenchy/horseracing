@@ -4,6 +4,7 @@ import (
   // "fmt"
   "database/sql"
   "os"
+  "io"
 
   "github.com/gocarina/gocsv"
   "github.com/urfave/cli/v2"
@@ -17,12 +18,14 @@ func main() {
         // log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stderr})
 
         var filepath string
+        var cid int
+        var year int
 
         app := &cli.App{
                 Commands: []*cli.Command{
                         {
-                                Name: "add",
-                                Usage: "Add a record",
+                                Name: "transform",
+                                Usage: "Transform racingpost data to model",
                                 Flags: []cli.Flag{
                                         &cli.StringFlag{
                                                 Name: "file",
@@ -39,6 +42,43 @@ func main() {
                                         return add(filepath)
                                 },
                         },
+                        {
+                                Name: "csv",
+                                Usage: "Add a csv",
+                                Flags: []cli.Flag{
+                                        &cli.StringFlag{
+                                                Name: "file",
+                                                Aliases: []string{"f"},
+                                                Usage: "path to racingpost csv file",
+                                                Destination: &filepath,
+                                        },
+                                        &cli.IntFlag{
+                                                Name: "Course ID",
+                                                Aliases: []string{"c","cid"},
+                                                Usage: "the course id of the csv file",
+                                                Destination: &cid,
+                                        },
+                                        &cli.IntFlag{
+                                                Name: "Year",
+                                                Aliases: []string{"y"},
+                                                Usage: "the year pertaining to the data",
+                                                Destination: &year,
+                                        },
+                                },
+                                Action: func (cCtx *cli.Context) error {
+                                        if filepath == "" {
+                                                panic("filepath empty")
+                                        }
+                                        if cid == 0 { // i.e empty
+                                                panic("course id empty")
+                                        }
+                                        if year == 0 { // i.e. empty
+                                                panic("year empty")
+                                        }
+
+                                        return Racingpost(cid, year, filepath)
+                                },
+                        },
                 },
         }
 
@@ -46,6 +86,34 @@ func main() {
                 log.Panic().Err(err).Msg("panicing")
                 panic(err)
         }
+}
+
+func Racingpost(cid int, year int, filepath string) error {
+        // Open DB connection
+        db, err := sql.Open("postgres", "postgresql://localhost/horse_racing?sslmode=disable")
+        if err != nil {
+                panic(err)
+        }
+        defer db.Close()
+
+        csv, err := os.OpenFile(filepath, os.O_RDWR|os.O_CREATE, 0755)
+        if err != nil {
+                return err
+        }
+        defer csv.Close()
+
+        c, err := io.ReadAll(csv)
+        if err != nil {
+                return err
+        }
+
+        write := Write{ db: db }
+
+        if err := write.Racingpost(cid, year, &c); err != nil {
+                return err
+        }
+
+        return nil
 }
 
 func add(filepath string) error {

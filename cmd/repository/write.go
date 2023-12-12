@@ -13,7 +13,6 @@ type Write struct {
         db *sql.DB
 }
 
-
 type root struct{}
 
 func (w *Write) Add(r *RacingPostRecord) error {
@@ -27,26 +26,27 @@ func (w *Write) Add(r *RacingPostRecord) error {
         return errors.Join(err_own, err_jky, err_trn, err_hrs, err_rce, err_run)
 }
 
-//func RacingPost(records []*RacingPostRecord) error {
-//        tx, err := w.db.Begin()
-//        if err != nil {
-//                return err
-//        }
-//
-//        st := fmt.Sprintf("INSERT INTO racingpost VALUES($1, $2) ON CONFLICT DO NOTHING;")
-//
-//        _, err = tx.Exec(st, "filename", r.ToString())
-//        if err != nil {
-//                _ = tx.Rollback()
-//                return err
-//        }
-//
-//        if err := tx.Commit(); err != nil {
-//                return err
-//        }
-//
-//        return nil
-//}
+// RacingpostCSV persists mined Racingpost CSV
+func (w *Write) Racingpost(cid int, year int, csv *[]byte) error {
+        tx, err := w.db.Begin()
+        if err != nil {
+                return err
+        }
+
+        st := fmt.Sprintf("INSERT INTO racingpost VALUES($1, $2, $3, $4) ON CONFLICT DO NOTHING;")
+
+        _, err = tx.Exec(st, cid, year, csv, false)
+        if err != nil {
+                _ = tx.Rollback()
+                return err
+        }
+
+        if err := tx.Commit(); err != nil {
+                return err
+        }
+
+        return nil
+}
 
 func (w *Write) Owner(r *RacingPostRecord) error {
         tx, err := w.db.Begin()
@@ -176,7 +176,6 @@ func (w *Write) Runner(r *RacingPostRecord) error {
         }
 
         st := fmt.Sprintf("INSERT INTO runner VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20) ON CONFLICT DO NOTHING;")
-
 
         root := &root{}
 

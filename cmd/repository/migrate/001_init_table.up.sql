@@ -1,59 +1,5 @@
 BEGIN;
 
-CREATE TABLE IF NOT EXISTS racingpost (
-        -- race_info
-        "date" TEXT,
-        region TEXT,
-        course_id TEXT,
-        course TEXT,
-        race_id TEXT,
-        off TEXT,
-        race_name TEXT,
-        "type" TEXT,
-        class TEXT,
-        pattern TEXT,
-        rating_band TEXT,
-        age_band TEXT,
-        sex_rest TEXT,
-        dist_m TEXT,
-        going TEXT,
-        surface TEXT,
-        ran TEXT,
-
-        -- runner_info
-        num TEXT,
-        pos TEXT,
-        draw TEXT,
-        ovr_btn TEXT,
-        btn TEXT,
-        horse_id TEXT,
-        horse TEXT,
-        age TEXT,
-        sex TEXT,
-        lbs TEXT,
-        hg TEXT,
-        time TEXT,
-        "dec" TEXT,
-        jockey_id TEXT,
-        jockey TEXT,
-        trainer_id TEXT,
-        trainer TEXT,
-        prize TEXT,
-        "or" TEXT,
-        rpr TEXT,
-        ts TEXT,
-        sire_id TEXT,
-        sire TEXT,
-        dam_id TEXT,
-        dam TEXT,
-        damsire_id TEXT,
-        damsire TEXT,
-        owner_id TEXT,
-        owner TEXT,
-        silk_url TEXT,
-        "comment" TEXT
-);
-
 CREATE TABLE IF NOT EXISTS horse (
         horse_id INT PRIMARY KEY,
         name VARCHAR(255) NOT NULL,
@@ -127,6 +73,13 @@ CREATE TABLE IF NOT EXISTS runner (
         ts_rating REAL,
         owner_id INT REFERENCES owner (owner_id),
         "comment" TEXT
+);
+
+CREATE TABLE IF NOT EXISTS racingpost (
+        course_id INT NOT NULL REFERENCES course (course_id),
+        year INT NOT NULL,
+        csv TEXT NOT NULL,
+        processed BOOLEAN NOT NULL
 );
 
 COMMIT;
