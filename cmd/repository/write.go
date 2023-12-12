@@ -16,6 +16,13 @@ type Write struct {
 type root struct{}
 
 func (w *Write) Add(r *RacingPostRecord) error {
+        // args: int courseid, int year
+
+        // read row from racing post
+        // pass csv field to methods
+
+
+
         err_own := w.Owner(r)
         err_jky := w.Jockey(r)
         err_trn := w.Trainer(r)

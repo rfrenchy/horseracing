@@ -27,15 +27,24 @@ func main() {
                                 Usage: "Transform racingpost data to model",
                                 Flags: []cli.Flag{
                                         &cli.StringFlag{
-                                                Name: "file",
-                                                Aliases: []string{"f"},
-                                                Usage: "path to racingpost csv file",
-                                                Destination: &filepath,
+                                                Name: "--course-id",
+                                                Aliases: []string{"c", "cid"},
+                                                Usage: "course id of csv to transform to model",
+                                                Destination: &cid,
+                                        },
+                                        &cli.StringFlag{
+                                                Name: "--year",
+                                                Aliases: []string{"y"},
+                                                Usage: "year of csv to transform to model",
+                                                Destination: &year,
                                         },
                                 },
                                 Action: func (cCtx *cli.Context) error {
-                                        if filepath == "" {
-                                                panic("path to file required")
+                                        if cid == 0 {
+                                                panic("course-id empty")
+                                        }
+                                        if year == 0 {
+                                                panic("year empty")
                                         }
 
                                         return add(filepath)
@@ -46,21 +55,21 @@ func main() {
                                 Usage: "Add a csv",
                                 Flags: []cli.Flag{
                                         &cli.StringFlag{
-                                                Name: "file",
+                                                Name: "--file",
                                                 Aliases: []string{"f"},
-                                                Usage: "path to racingpost csv file",
+                                                Usage: "path to csv file",
                                                 Destination: &filepath,
                                         },
                                         &cli.IntFlag{
-                                                Name: "Course ID",
+                                                Name: "--course-id",
                                                 Aliases: []string{"c","cid"},
-                                                Usage: "the course id of the csv file",
+                                                Usage: "the course id of data",
                                                 Destination: &cid,
                                         },
                                         &cli.IntFlag{
-                                                Name: "Year",
+                                                Name: "--year",
                                                 Aliases: []string{"y"},
-                                                Usage: "the year pertaining to the data",
+                                                Usage: "the year belonging to the data",
                                                 Destination: &year,
                                         },
                                 },
@@ -75,7 +84,7 @@ func main() {
                                                 panic("year empty")
                                         }
 
-                                        return Racingpost(cid, year, filepath)
+                                        return racingpost(cid, year, filepath)
                                 },
                         },
                 },
@@ -83,11 +92,11 @@ func main() {
 
         if err := app.Run(os.Args); err != nil {
                 log.Panic().Err(err).Msg("panicing")
-                panic(err)
+                panic(err
         }
 }
 
-func Racingpost(cid int, year int, filepath string) error {
+func racingpost(cid int, year int, filepath string) error {
         // Open DB connection
         db, err := sql.Open("postgres", "postgresql://localhost/horse_racing?sslmode=disable")
         if err != nil {
@@ -116,6 +125,15 @@ func Racingpost(cid int, year int, filepath string) error {
 }
 
 func add(filepath string) error {
+        // transform(cid int, year int) error
+        // read racingpost cid, year
+        // call write.Add with racingpost row
+
+
+        // ********
+        // * TODO *
+        // ********
+
         // Open DB connection
         db, err := sql.Open("postgres", "postgresql://localhost/horse_racing?sslmode=disable")
         if err != nil {
