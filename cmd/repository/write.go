@@ -16,28 +16,6 @@ type Write struct {
 
 type root struct{}
 
-func RacingPost(records []*RacingPostRecord) error {
-        return nil
-       // st := fmt.Sprintf("INSERT INTO racingpost VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33, $34, $35, $36, $37, $38, $39, $40, $41, $42, $43, $44, $45, $46, $47");
-
-       // for i := 0; i < len(records); i++ {
-       //         _, err := tx.Exec(st, p...)
-       //         if err != nil {
-       //                 _ = tx.Rollback()
-
-       //                 log.Error().Err(err).Int("row", i).
-       //                         Interface("params", p).
-       //                         Msg("SKIPPING ROW")
-
-       //                 continue
-       //         }
-
-       //         if err := tx.Commit(); err != nil {
-       //                 return err
-       //         }
-       //  }
- }
-
 func (w *Write) Add(r *RacingPostRecord) error {
         err_own := w.Owner(r)
         err_jky := w.Jockey(r)
@@ -49,6 +27,26 @@ func (w *Write) Add(r *RacingPostRecord) error {
         return errors.Join(err_own, err_jky, err_trn, err_hrs, err_rce, err_run)
 }
 
+//func RacingPost(records []*RacingPostRecord) error {
+//        tx, err := w.db.Begin()
+//        if err != nil {
+//                return err
+//        }
+//
+//        st := fmt.Sprintf("INSERT INTO racingpost VALUES($1, $2) ON CONFLICT DO NOTHING;")
+//
+//        _, err = tx.Exec(st, "filename", r.ToString())
+//        if err != nil {
+//                _ = tx.Rollback()
+//                return err
+//        }
+//
+//        if err := tx.Commit(); err != nil {
+//                return err
+//        }
+//
+//        return nil
+//}
 
 func (w *Write) Owner(r *RacingPostRecord) error {
         tx, err := w.db.Begin()
@@ -142,7 +140,22 @@ func (w *Write) Race(r *RacingPostRecord) error {
 
         st := fmt.Sprintf("INSERT INTO race VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15) ON CONFLICT DO NOTHING;")
 
-        _, err = tx.Exec(st, r.RaceID, r.RaceName, r.RaceDate, r.CourseID, r.RaceOfftime, r.RaceType, r.RaceClass, r.RacePattern, r.RatingbandRestrictions, r.AgebandRestriction, r.SexRestriction, r.Distance, r.Going, r.Surface, r.Ran)
+        _, err = tx.Exec(st,
+                r.RaceID,
+                r.RaceName,
+                r.RaceDate,
+                r.CourseID,
+                r.RaceOfftime,
+                r.RaceType,
+                r.RaceClass,
+                r.RacePattern,
+                r.RatingbandRestrictions,
+                r.AgebandRestriction,
+                r.SexRestriction,
+                r.Distance,
+                r.Going,
+                r.Surface,
+                r.Ran)
 
         if err != nil {
                 _ = tx.Rollback()
@@ -166,10 +179,6 @@ func (w *Write) Runner(r *RacingPostRecord) error {
 
 
         root := &root{}
-
-        //fmt.Println(r.Overbeaten)
-
-        //return nil
 
         _, err = tx.Exec(st,
                 r.HorseID,

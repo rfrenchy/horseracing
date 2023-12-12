@@ -1,17 +1,35 @@
 #! /bin/bash
 
-FNAME=$1
-CRS=7
+main() {
+        # exit if VPN errors
+        set -e
 
-echo > $FNAME
+        if [[ $# -eq 0 ]] ; then
+                echo 'need a course id in order to mine'
+                exit 0
+        fi
 
-seq 2008 2022 | while read Y
-do
-        echo "./rpscrape.py -c $CRS -y $Y -t flat" >> $FNAME
-done
+        # connect to vpn
+        vpn
 
-cat $FNAME | shuf -o $FNAME
+        # mine racingpost
+        gen $1 | shuf | mine
+}
 
+# generate mining commands
+gen() {
+        seq 2008 2022 |
+                while read Y; do echo "./rpscrape.py -c $1 -y $Y -t flat"; done
+}
 
-# TODO intersperse with vpn connect/disconnect every x(10?) lines
+# execute mining commands
+mine() {
+        cd ~/dev/punts/tools/rpscrape/scripts
+
+        while read -r com; do eval $com; done
+
+        cd --
+}
+
+main $1
 

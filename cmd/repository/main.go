@@ -16,7 +16,6 @@ func main() {
         zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
         // log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stderr})
 
-
         var filepath string
 
         app := &cli.App{
