@@ -4,7 +4,7 @@
 
 ### analysis
 
-- [ ] nearest mean classifier
+- [ ] NMC (Nearest Mean Classifier)
 
 ### postgres
 
