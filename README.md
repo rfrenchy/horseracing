@@ -4,18 +4,19 @@
 
 ### analysis
 
-- [ ] NMC (Nearest Mean Classifier)
+- [ ] nmc (Nearest Mean Classifier)
 
 ### postgres
 
-- [x] Write Racingpost CSV
-- [x] Write modelled horse racing
-- [ ] Read Modelled Horse-racing Data
-- [x] Full Migration
+- [x] write racingpost
+- [x] write model
+  - [ ] fk horse | damsire | dam | sire
+- [ ] read model
+- [x] migrations
 
 ### mining
 
-- [x] Racingpost
+- [x] racingpost
 
 ## dir
 
