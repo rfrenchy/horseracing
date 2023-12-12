@@ -8,13 +8,13 @@ TODO
 
 ### postgres
 
-- [ ] Write Racingpost CSV
+- [x] Write Racingpost CSV
 - [ ] Read Modelled Horse-racing Data
 - [x] Full Migration
 
 ### scrape
 
-- [ ] Obtain Racingpost Data
+- [x] Obtain Racingpost Data
 
 ## dir
 
