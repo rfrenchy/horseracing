@@ -1,3 +1,3 @@
 #! /bin/bash
 
-go run ./cmd/repository/... add -f ./brighton.csv
+go run ./cmd/repository/... add -f /home/ryan/dev/punts/tools/rpscrape/data/all/flat/2010.csv
