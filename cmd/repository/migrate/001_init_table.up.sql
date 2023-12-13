@@ -3,7 +3,10 @@ BEGIN;
 CREATE TABLE IF NOT EXISTS horse (
         horse_id INT PRIMARY KEY,
         name VARCHAR(255) NOT NULL,
-        sex VARCHAR(3) NOT NULL
+        sex VARCHAR(3) NOT NULL,
+        dam_id INT REFERENCES horse (horse_id), -- Mum
+        damsire_id INT REFERENCES horse (horse_id), -- Grandad Mum's side
+        sire_id INT REFERENCES horse (horse_id) -- Dad
 );
 
 CREATE TABLE IF NOT EXISTS trainer (

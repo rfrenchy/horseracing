@@ -185,16 +185,29 @@ func (w *Write) Horse(r *RacingPostRecord) error {
                 return err
         }
 
-        // Create statement
-        st := fmt.Sprintf("INSERT INTO horse VALUES($1, $2, $3) ON CONFLICT DO NOTHING;")
+        // Add Dam
+        _, err_d := tx.Exec("INSERT INTO horse VALUES($1, $2, $3) ON CONFLICT DO NOTHING;",
+                r.DamID, r.DamName, "M")
 
-        // Execute statement
-        _, err = tx.Exec(st, r.HorseID, r.HorseName, r.HorseSex)
+        // Add Damsire
+        _, err_ds := tx.Exec("INSERT INTO horse VALUES($1, $2, $3) ON CONFLICT DO NOTHING;",
+                r.DamsireID, r.DamsireName, "H")
+
+        // Add Sire
+        _, err_s := tx.Exec("INSERT INTO horse VALUES($1, $2, $3) ON CONFLICT DO NOTHING;",
+                r.SireID, r.SireName, "H")
+
+        // Add Horse
+        _, err_h := tx.Exec("INSERT INTO horse VALUES($1, $2, $3, $4, $5, $6) ON CONFLICT (horse_id) DO UPDATE SET dam_id = $4, damsire_id = $5, sire_id = $6;",
+                r.HorseID, r.HorseName, r.HorseSex, r.DamID, r.DamsireID, r.SireID)
+
+        // Merge errors
+        errs := errors.Join(err_d, err_ds, err_s, err_h)
 
         // Rollback on error
-        if err != nil {
+        if errs != nil {
                 _ = tx.Rollback()
-                return err
+                return errs
         }
 
         // Commit
