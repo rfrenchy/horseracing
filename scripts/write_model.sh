@@ -1,3 +1,3 @@
 #! /bin/bash
 
-go run ./cmd/repository/... transform -f /home/ryan/dev/punts/tools/rpscrape/data/all/flat/2011.csv
+go run ./cmd/repository/... model -cid 7 -y 2011

@@ -5,7 +5,6 @@ import (
   "os"
   "io"
 
-  "github.com/gocarina/gocsv"
   "github.com/urfave/cli/v2"
   "github.com/rs/zerolog"
   "github.com/rs/zerolog/log"
@@ -23,23 +22,25 @@ func main() {
         app := &cli.App{
                 Commands: []*cli.Command{
                         {
-                                Name: "transform",
+                                Name: "model",
                                 Usage: "Transform racingpost data to model",
                                 Flags: []cli.Flag{
-                                        &cli.StringFlag{
-                                                Name: "--course-id",
+                                        &cli.IntFlag{
+                                                Name: "course-id",
                                                 Aliases: []string{"c", "cid"},
                                                 Usage: "course id of csv to transform to model",
                                                 Destination: &cid,
                                         },
-                                        &cli.StringFlag{
-                                                Name: "--year",
+                                        &cli.IntFlag{
+                                                Name: "year",
                                                 Aliases: []string{"y"},
                                                 Usage: "year of csv to transform to model",
                                                 Destination: &year,
                                         },
                                 },
                                 Action: func (cCtx *cli.Context) error {
+                                        // Check for empty required params
+
                                         if cid == 0 {
                                                 panic("course-id empty")
                                         }
@@ -47,7 +48,7 @@ func main() {
                                                 panic("year empty")
                                         }
 
-                                        return add(filepath)
+                                        return model(cid, year)
                                 },
                         },
                         {
@@ -55,25 +56,27 @@ func main() {
                                 Usage: "Add a csv",
                                 Flags: []cli.Flag{
                                         &cli.StringFlag{
-                                                Name: "--file",
+                                                Name: "file",
                                                 Aliases: []string{"f"},
                                                 Usage: "path to csv file",
                                                 Destination: &filepath,
                                         },
                                         &cli.IntFlag{
-                                                Name: "--course-id",
+                                                Name: "course-id",
                                                 Aliases: []string{"c","cid"},
                                                 Usage: "the course id of data",
                                                 Destination: &cid,
                                         },
                                         &cli.IntFlag{
-                                                Name: "--year",
+                                                Name: "year",
                                                 Aliases: []string{"y"},
-                                                Usage: "the year belonging to the data",
+                                                Usage: "the year the data was recorded",
                                                 Destination: &year,
                                         },
                                 },
                                 Action: func (cCtx *cli.Context) error {
+                                        // Check for empty required params
+
                                         if filepath == "" {
                                                 panic("filepath empty")
                                         }
@@ -92,7 +95,7 @@ func main() {
 
         if err := app.Run(os.Args); err != nil {
                 log.Panic().Err(err).Msg("panicing")
-                panic(err
+                panic(err)
         }
 }
 
@@ -104,36 +107,31 @@ func racingpost(cid int, year int, filepath string) error {
         }
         defer db.Close()
 
+        // Open CSV file
         csv, err := os.OpenFile(filepath, os.O_RDWR|os.O_CREATE, 0755)
         if err != nil {
                 return err
         }
         defer csv.Close()
 
-        c, err := io.ReadAll(csv)
+        // Read all CSV contents
+        cnt, err := io.ReadAll(csv)
         if err != nil {
                 return err
         }
 
-        write := Write{ db: db }
+        // Create DB writer
+        write := NewWrite(db)
 
-        if err := write.Racingpost(cid, year, &c); err != nil {
+        // Create RacingPost record
+        if err := write.RacingPost(cid, year, &cnt); err != nil {
                 return err
         }
 
         return nil
 }
 
-func add(filepath string) error {
-        // transform(cid int, year int) error
-        // read racingpost cid, year
-        // call write.Add with racingpost row
-
-
-        // ********
-        // * TODO *
-        // ********
-
+func model(cid int, year int) error {
         // Open DB connection
         db, err := sql.Open("postgres", "postgresql://localhost/horse_racing?sslmode=disable")
         if err != nil {
@@ -141,21 +139,28 @@ func add(filepath string) error {
         }
         defer db.Close()
 
-        csv, err := os.OpenFile(filepath, os.O_RDWR|os.O_CREATE, 0755)
+        // Create DB reader
+        read := Read{ db }
+
+        // Query RacingPost records
+        records, err := read.RacingPost(cid, year)
         if err != nil {
                 return err
         }
-        defer csv.Close()
 
-        write := Write{ db: db }
-
-        records := []*RacingPostRecord{}
-        if err := gocsv.UnmarshalFile(csv, &records); err != nil {
-	        return err
-	}
+        // Create DB writer
+        write := NewWrite(db)
 
         for _, r := range records {
-                if err := write.Add(r); err != nil {
+
+                // Create/Transform to model
+                if err := write.Model(r); err != nil {
+                        return err
+                }
+
+                // Update Racingpost record as processed
+                // TODO move this to transaction within write.Model
+                if err := write.Processed(cid, year); err != nil {
                         return err
                 }
         }

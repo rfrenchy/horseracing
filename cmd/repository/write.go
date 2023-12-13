@@ -2,52 +2,62 @@ package main
 
 import (
   "fmt"
-  "strconv"
   "errors"
   "database/sql"
 
   _ "github.com/lib/pq"
 )
 
+// Write persists mined and modelled data
 type Write struct {
         db *sql.DB
+        convert *convert
 }
 
-type root struct{}
+// NewWrite creates a Write
+func NewWrite(db *sql.DB) *Write {
+        return &Write{ db: db,
+                convert: &convert{} }
 
-func (w *Write) Add(r *RacingPostRecord) error {
-        // args: int courseid, int year
-
-        // read row from racing post
-        // pass csv field to methods
-
-
-
-        err_own := w.Owner(r)
-        err_jky := w.Jockey(r)
-        err_trn := w.Trainer(r)
-        err_hrs := w.Horse(r)
-        err_rce := w.Race(r)
-        err_run := w.Runner(r)
-
-        return errors.Join(err_own, err_jky, err_trn, err_hrs, err_rce, err_run)
 }
 
-// RacingpostCSV persists mined Racingpost CSV
-func (w *Write) Racingpost(cid int, year int, csv *[]byte) error {
+// Model persists a complete parse of a racing post record
+func (wr *Write) Model(r *RacingPostRecord) error {
+        // Write to all
+        err_own := wr.Owner(r)
+        err_jky := wr.Jockey(r)
+        err_trn := wr.Trainer(r)
+        err_hrs := wr.Horse(r)
+        err_rce := wr.Race(r)
+        err_run := wr.Runner(r)
+
+        // Join all errors
+        errs := errors.Join(err_own, err_jky, err_trn, err_hrs, err_rce, err_run)
+
+        return errs
+}
+
+// RacingpostCSV persists mined Racingpost data
+func (w *Write) RacingPost(cid int, year int, csv *[]byte) error {
+        // Begin Transaction
         tx, err := w.db.Begin()
         if err != nil {
                 return err
         }
 
+        // Create statement
         st := fmt.Sprintf("INSERT INTO racingpost VALUES($1, $2, $3, $4) ON CONFLICT DO NOTHING;")
 
+        // Execute statement
         _, err = tx.Exec(st, cid, year, csv, false)
+
+        // Rollback on error
         if err != nil {
                 _ = tx.Rollback()
                 return err
         }
 
+        // Commit
         if err := tx.Commit(); err != nil {
                 return err
         }
@@ -55,20 +65,55 @@ func (w *Write) Racingpost(cid int, year int, csv *[]byte) error {
         return nil
 }
 
-func (w *Write) Owner(r *RacingPostRecord) error {
+// Processed updates a racingpost record as now processed
+func (w *Write) Processed(cid int, year int) error {
+        // Begin Transaction
         tx, err := w.db.Begin()
         if err != nil {
                 return err
         }
 
+        // Create statement
+        st := fmt.Sprintf("UPDATE racingpost SET processed = true WHERE course_id = $1 AND year = $2;")
+
+        // Execute statement
+        _, err = tx.Exec(st, cid, year)
+
+        // Rollback on error
+        if err != nil {
+                _ = tx.Rollback()
+                return err
+        }
+
+        // Commit
+        if err := tx.Commit(); err != nil {
+                return err
+        }
+
+        return nil
+}
+
+// Owner persists a race horse owner
+func (w *Write) Owner(r *RacingPostRecord) error {
+        // Begin Transaction
+        tx, err := w.db.Begin()
+        if err != nil {
+                return err
+        }
+
+        // Create statement
         st := fmt.Sprintf("INSERT INTO owner VALUES($1, $2, $3) ON CONFLICT DO NOTHING;")
 
+        // Execute statement
         _, err = tx.Exec(st, r.OwnerID, r.OwnerName, r.SilkURL)
+
+        // Rollback statement
         if err != nil {
                 _ = tx.Rollback()
                 return err
         }
 
+        // Commit
         if err := tx.Commit(); err != nil {
                 return err
         }
@@ -76,20 +121,27 @@ func (w *Write) Owner(r *RacingPostRecord) error {
         return nil
 }
 
+// Jockey persists a jockey
 func (w *Write) Jockey(r *RacingPostRecord) error {
+        // Begin transaction
         tx, err := w.db.Begin()
         if err != nil {
                 return err
         }
 
+        // Create statemnt
         st := fmt.Sprintf("INSERT INTO jockey VALUES($1, $2) ON CONFLICT DO NOTHING;")
 
+        // Execute statement
         _, err = tx.Exec(st, r.JockeyID, r.JockeyName)
+
+        // Rollback on error
         if err != nil {
                 _ = tx.Rollback()
                 return err
         }
 
+        // Commit
         if err := tx.Commit(); err != nil {
                 return err
         }
@@ -97,20 +149,27 @@ func (w *Write) Jockey(r *RacingPostRecord) error {
         return nil
 }
 
+// Trainer persists a race horse trainer
 func (w *Write) Trainer(r *RacingPostRecord) error {
+        // Begin transaction
         tx, err := w.db.Begin()
         if err != nil {
                 return err
         }
 
+        // Create statement
         st := fmt.Sprintf("INSERT INTO trainer VALUES($1, $2) ON CONFLICT DO NOTHING;")
 
+        // Execute statement
         _, err = tx.Exec(st, r.TrainerID, r.TrainerName)
+
+        // Rollback on error
         if err != nil {
                 _ = tx.Rollback()
                 return err
         }
 
+        // Commit
         if err := tx.Commit(); err != nil {
                 return err
         }
@@ -118,20 +177,27 @@ func (w *Write) Trainer(r *RacingPostRecord) error {
         return nil
 }
 
+// Horse persists a race horse
 func (w *Write) Horse(r *RacingPostRecord) error {
+        // Begin transaction
         tx, err := w.db.Begin()
         if err != nil {
                 return err
         }
 
+        // Create statement
         st := fmt.Sprintf("INSERT INTO horse VALUES($1, $2, $3) ON CONFLICT DO NOTHING;")
 
+        // Execute statement
         _, err = tx.Exec(st, r.HorseID, r.HorseName, r.HorseSex)
+
+        // Rollback on error
         if err != nil {
                 _ = tx.Rollback()
                 return err
         }
 
+        // Commit
         if err := tx.Commit(); err != nil {
                 return err
         }
@@ -139,14 +205,18 @@ func (w *Write) Horse(r *RacingPostRecord) error {
         return nil
 }
 
+// Race persists a completed race
 func (w *Write) Race(r *RacingPostRecord) error {
+        // Begin transaction
         tx, err := w.db.Begin()
         if err != nil {
                 return err
         }
 
+        // Create statement
         st := fmt.Sprintf("INSERT INTO race VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15) ON CONFLICT DO NOTHING;")
 
+        // Execute statement
         _, err = tx.Exec(st,
                 r.RaceID,
                 r.RaceName,
@@ -164,11 +234,13 @@ func (w *Write) Race(r *RacingPostRecord) error {
                 r.Surface,
                 r.Ran)
 
+        // Rollback on error
         if err != nil {
                 _ = tx.Rollback()
                 return err
         }
 
+        // Commit
         if err := tx.Commit(); err != nil {
                 return err
         }
@@ -176,43 +248,47 @@ func (w *Write) Race(r *RacingPostRecord) error {
         return nil
 }
 
+// Race persists a runner of a completed race
 func (w *Write) Runner(r *RacingPostRecord) error {
+        // Begin statement
         tx, err := w.db.Begin()
         if err != nil {
                 return err
         }
 
+        // Create statement
         st := fmt.Sprintf("INSERT INTO runner VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20) ON CONFLICT DO NOTHING;")
 
-        root := &root{}
-
+        // Execute statement
         _, err = tx.Exec(st,
                 r.HorseID,
                 r.RaceID,
-                root.num(r.RacecardNumber),
-                root.position(r.FinishedPosition),
-                root.draw(r.Draw),
-                root.ovrbtn(r.Overbeaten),
-                root.btn(r.Beaten),
+                w.convert.num(r),
+                w.convert.position(r),
+                w.convert.draw(r),
+                w.convert.ovrbtn(r),
+                w.convert.btn(r),
                 r.HorseAge,
                 r.HorseWeight,
                 r.Headgear,
-                root.time(r.FinishTime),
+                w.convert.time(r),
                 r.DecimalOdds,
                 r.JockeyID,
                 r.TrainerID,
-                root.prize(r.PrizeMoney),
-                root.rating(r.OfficialRating),
-                root.rating(r.RPRRating),
-                root.rating(r.TSRating),
+                w.convert.prize(r),
+                w.convert.rating(r.OfficialRating),
+                w.convert.rating(r.RPRRating),
+                w.convert.rating(r.TSRating),
                 r.OwnerID,
                 r.Comment)
 
+        // Rollback on error
         if err != nil {
                 _ = tx.Rollback()
                 return err
         }
 
+        // Commit
         if err := tx.Commit(); err != nil {
                 return err
         }
@@ -220,17 +296,20 @@ func (w *Write) Runner(r *RacingPostRecord) error {
         return nil
 }
 
-func (p *root) num(s string) string {
-        if s == "" {
-                return strconv.Itoa(0) // blank?
+// RacingpostRecord to model conversions
+type convert struct{}
+
+func (c *convert) num(r *RacingPostRecord) string {
+        switch r.RacecardNumber {
+                default: return r.RacecardNumber
+                case "": return "0" // blank?
         }
-        return s
 }
 
 // Abbreviations help - https://help.racingpost.com/hc/en-us/articles/115001699689-Abbreviations-on-the-racecard
-func (p *root) position(s string) string {
-        switch s {
-                default:     return s
+func (c *convert) position(r *RacingPostRecord) string {
+        switch r.FinishedPosition {
+                default:     return r.FinishedPosition
                 case "":     return ""
                 case "PU":   return "-1" // (Pulled up i.e. injury/issue)
                 case "UR":   return "-2" // (Unseated Rider)
@@ -244,52 +323,45 @@ func (p *root) position(s string) string {
         }
 }
 
-func (p *root) draw(s string) string {
-        if s == "" {
-                return "0" // blank?
+func (c *convert) draw(r *RacingPostRecord) string {
+        switch r.Draw {
+                default: return r.Draw
+                case "": return "0" // blank?
         }
-        return s
 }
 
-func (p *root) ovrbtn(s string) string {
-        if s == "-" {
-                return "0"
+func (c *convert) ovrbtn(r *RacingPostRecord) string {
+        switch r.Overbeaten {
+                default:  return r.Overbeaten
+                case "-": return "0"
         }
-        return s
 }
 
-func (p *root) btn(s string) string {
-        if s == "-" {
-                return "0"
+func (c *convert) btn(r *RacingPostRecord) string {
+        switch r.Beaten {
+                default: return r.Beaten
+                case "-": return "0"
         }
-        return s
 }
 
-func (p *root) time(s string) *string {
-        if s == "-" {
-                return nil
+func (c *convert) time(r *RacingPostRecord) *string {
+        switch r.FinishTime {
+                case "-": return nil
+                default: return &r.FinishTime
         }
-        return &s
 }
 
-func (p *root) seconds(s string) *string {
-        if s == "-" {
-                return nil
+func (c *convert) prize(r *RacingPostRecord) string {
+        switch r.PrizeMoney {
+                case "", "–": return "0"
+                default: return r.PrizeMoney
         }
-        return &s
 }
 
-func (p *root) prize(s string) string {
-        if s == "" || s == "–" {
-                return "0"
+func (c *convert) rating(s string) string {
+        switch s {
+                case "", "–": return "0"
+                default: return s
         }
-        return s
-}
-
-func (p *root) rating(s string) string {
-        if s == "" || s == "–" {
-                return "0"
-        }
-        return s
 }
 
