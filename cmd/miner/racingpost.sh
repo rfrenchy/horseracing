@@ -9,8 +9,12 @@ main() {
                 exit 0
         fi
 
-        # connect to vpn
-        vpn
+        # TODO check IP, exit if home
+       # if [[ $(curl ifconfig.me) -eq '80.192.186.153%' ]]; then
+       #         echo 'need to connect to vpn'
+       #         exit 0
+       # fi
+
 
         # mine racingpost
         gen $1 | shuf | mine
@@ -18,7 +22,7 @@ main() {
 
 # generate mining commands
 gen() {
-        seq 2008 2022 |
+        seq 2008 2023 |
                 while read Y; do echo "./rpscrape.py -c $1 -y $Y -t flat"; done
 }
 
