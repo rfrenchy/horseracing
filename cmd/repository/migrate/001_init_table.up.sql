@@ -76,6 +76,7 @@ CREATE TABLE IF NOT EXISTS runner (
         ts_rating REAL,
         owner_id INT REFERENCES owner (owner_id),
         "comment" TEXT
+        PRIMARY KEY(horse_id, race_id)
 );
 
 CREATE TABLE IF NOT EXISTS racingpost (
