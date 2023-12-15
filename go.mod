@@ -1,4 +1,4 @@
-module github.com/rfrenchy/punts
+module punts
 
 go 1.21.4
 
