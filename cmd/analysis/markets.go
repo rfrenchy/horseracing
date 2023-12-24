@@ -1,8 +1,8 @@
 package main
 
-//import (
-// "punts/internal/horseracing"
-// )
+import (
+	hrace "punts/internal/horseracing"
+)
 
 // smarkets
 
@@ -13,16 +13,16 @@ type MarketResult struct{}
 
 // ToWin
 // Given racecard?
-func (m *Markets) ToWin(r *Runner) bool {
-	return r.Position == 1
+func (m *Markets) ToWin(r *hrace.Runner) bool {
+	return 1 == r.Position
 }
 
-func (m *Markets) ToPlaceTop3(r Runner) bool {
-	return r.Position >= 3
+func (m *Markets) ToPlaceTop3(r *hrace.Runner) bool {
+	return 3 <= r.Position
 }
 
-func (m *Markets) ToPlaceTop4(r Runner) bool {
-	return r.Position >= 4
+func (m *Markets) ToPlaceTop4(r *hrace.Runner) bool {
+	return 4 <= r.Position
 }
 
 func (m *Markets) Against(marketresult bool) bool {
