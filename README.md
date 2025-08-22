@@ -1,6 +1,6 @@
 # Horse Racing
 
-Pulls and models Horse Racing Sports data ready for analysis.
+Writes Horse Racing Sports data to a model ready for analysis.
 
 ## apps
 
