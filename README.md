@@ -1,4 +1,6 @@
-# Punts
+# Horse Racing
+
+Pulls and models Horse Racing Sports data ready for analysis.
 
 ## apps
 
