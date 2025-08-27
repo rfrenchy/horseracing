@@ -1,0 +1,80 @@
+.magic-page {
+    height: 100vh;
+    display: grid;
+    grid-template-rows: 2fr 4fr;
+
+    margin-left: 10vw;
+    margin-right: 10vw;
+}
+
+.top-view {
+    border: solid 2px white;
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+    height: 100%;
+}
+
+.character-screen {
+    height: 100%;
+}
+
+.magic-info {
+    height: 100%;
+    display: grid;
+    grid-template-rows: 1fr 4fr;
+}
+
+.screen-name {
+    border: solid 2px white;
+    padding-left: 12px;
+    padding-top: 12px;
+}
+
+.magic-top-select {
+    border: solid 2px white;
+    padding-left: 12px;
+    padding-top: 12px;
+}
+
+.bottom-view {
+    border: solid 2px white;
+    max-height: 100%;
+    display: grid;
+    grid-template-rows: 1fr 10fr;
+}
+
+.description-bar {
+    border: solid 2px white;
+}
+
+.magic-select-list {
+    height: fit-content;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.summon-select-list {
+    height: fit-content;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.summon-select-list > li {
+    font-size: larger;
+    height: max-content;
+    cursor: pointer;
+    padding: 8px;
+}
+
+.magic-select-list > li {
+    height: max-content;
+    cursor: pointer;
+    padding: 8px;
+}
+
+.magic-select-list > .unselectable {
+    color: grey;
+    cursor: not-allowed;
+}
+
+

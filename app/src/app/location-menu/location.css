@@ -1,0 +1,14 @@
+.location-item {
+    background-color: darkblue;
+    border: 1px solid white;
+
+    width: 50vw;
+    margin-top: 8px;
+    margin-bottom: 8px;
+
+    position: absolute;
+    bottom: 0;
+    right: 0;
+
+    font-size: xx-large;
+}

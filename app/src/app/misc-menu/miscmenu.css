@@ -1,0 +1,17 @@
+.misc-menu {
+    background-color: darkblue;
+    border: 1px solid white;
+    position: absolute;
+    bottom: 40px;
+    right: 0;
+
+    width: 25vw;
+
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.misc-menu-item {
+    display: flex;
+    justify-content: space-between;
+}

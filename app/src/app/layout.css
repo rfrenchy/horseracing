@@ -1,0 +1,10 @@
+.character-page {
+    margin-left: 10vw;
+    margin-right: 10vw;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+    background-color: black;
+    
+    width: calc(640px * 2);
+    height: 90vh;
+}

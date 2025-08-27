@@ -15,3 +15,7 @@ tools/rpscrape/**
 tools/rpscrape
 vendor/**
 data/**
+
+app/node_modules/*
+graphql/node_modules/*
+
