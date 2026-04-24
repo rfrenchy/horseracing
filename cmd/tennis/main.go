@@ -15,7 +15,7 @@ func main() {
 	// 1. Connect to Postgres
 	connStr := os.Getenv("DATABASE_URL")
 	if connStr == "" {
-		connStr = "postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable"
+		connStr = "postgres://postgres:password@localhost:5432/postgres?sslmode=disable"
 	}
 	db, err := sql.Open("postgres", connStr)
 	if err != nil {
@@ -89,7 +89,7 @@ func main() {
 	log.Info().Msg("Table atp_matches ready")
 
 	// 3. Read CSV
-	file, err := os.Open("data/atp_matches_2024.csv")
+	file, err := os.Open("D:\\dev\\horseracing\\data\\atp_matches_2000.csv")
 	if err != nil {
 		log.Fatal().Err(err).Msg("Failed to open CSV file")
 	}
@@ -125,7 +125,7 @@ func main() {
 	if err != nil {
 		log.Fatal().Err(err).Msg("Failed to start transaction")
 	}
-	
+
 	stmt, err := tx.Prepare(insertSQL)
 	if err != nil {
 		log.Fatal().Err(err).Msg("Failed to prepare statement")
