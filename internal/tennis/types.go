@@ -3,6 +3,7 @@ package tennis
 // Match represents a single tennis match record parsed from the ATP CSV data
 // and mapped to database columns.
 type Match struct {
+	ID           string
 	TourneyID    string `csv:"tourney_id" db:"tourney_id"`
 	TourneyName  string `csv:"tourney_name" db:"tourney_name"`
 	Surface      string `csv:"surface" db:"surface"`
@@ -61,4 +62,13 @@ type Match struct {
 	WinnerRankPoints *int `csv:"winner_rank_points" db:"winner_rank_points"`
 	LoserRank        *int `csv:"loser_rank" db:"loser_rank"`
 	LoserRankPoints  *int `csv:"loser_rank_points" db:"loser_rank_points"`
+}
+
+type Tournament struct {
+	TourneyID    string `csv:"tourney_id" db:"tourney_id"`
+	TourneyName  string `csv:"tourney_name" db:"tourney_name"`
+	Surface      string `csv:"surface" db:"surface"`
+	DrawSize     int    `csv:"draw_size" db:"draw_size"`
+	TourneyLevel string `csv:"tourney_level" db:"tourney_level"`
+	TourneyDate  string `csv:"tourney_date" db:"tourney_date"`
 }

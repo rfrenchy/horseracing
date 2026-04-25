@@ -9,6 +9,7 @@ import (
 	"github.com/gocarina/gocsv"
 	_ "github.com/lib/pq"
 	"github.com/rs/zerolog/log"
+	"github.com/urfave/cli/v2"
 )
 
 func main() {
@@ -27,9 +28,35 @@ func main() {
 		log.Fatal().Err(err).Msg("Failed to ping database")
 	}
 
+	app := &cli.App{
+		Commands: []*cli.Command{
+			{
+				Name: "create-raw",
+
+				Action: func(c *cli.Context) error {
+					return createRaw(db)
+				},
+			},
+			{
+				Name: "create-tournaments",
+				Action: func(c *cli.Context) error {
+					return createTournamentsTable(db)
+				},
+			},
+		},
+	}
+
+	err = app.Run(os.Args)
+	if err != nil {
+		log.Fatal().Err(err).Msg("Failed to run app")
+	}
+
+}
+
+func createRaw(db *sql.DB) error {
 	// 2. Create table
 	createTableSQL := `
-	CREATE TABLE IF NOT EXISTS atp_matches (
+	CREATE TABLE IF NOT EXISTS atp_matches_raw (
 		id SERIAL PRIMARY KEY,
 		tourney_id TEXT,
 		tourney_name TEXT,
@@ -82,11 +109,11 @@ func main() {
 		loser_rank_points INT		
 	);`
 
-	_, err = db.Exec(createTableSQL)
+	_, err := db.Exec(createTableSQL)
 	if err != nil {
 		log.Fatal().Err(err).Msg("Failed to create table")
 	}
-	log.Info().Msg("Table atp_matches ready")
+	log.Info().Msg("Table atp_matches_raw ready")
 
 	csvs := [...]string{"atp_matches_2000.csv", "atp_matches_2001.csv", "atp_matches_2002.csv", "atp_matches_2003.csv",
 		"atp_matches_2004.csv", "atp_matches_2005.csv", "atp_matches_2006.csv", "atp_matches_2007.csv", "atp_matches_2008.csv",
@@ -111,7 +138,7 @@ func main() {
 
 		// 4. Insert Data
 		insertSQL := `
-		INSERT INTO atp_matches (
+		INSERT INTO atp_matches_raw (
 			tourney_id, tourney_name, surface, draw_size, tourney_level, tourney_date, match_num,
 			winner_id, winner_seed, winner_entry, winner_name, winner_hand, winner_ht, winner_ioc, winner_age,
 			loser_id, loser_seed, loser_entry, loser_name, loser_hand, loser_ht, loser_ioc, loser_age,
@@ -165,4 +192,77 @@ func main() {
 
 		log.Info().Int("inserted", inserted).Msg("Successfully loaded data into database")
 	}
+
+	return nil
+}
+
+func createTournamentsTable(db *sql.DB) error {
+	createTableSQL := `
+	CREATE TABLE IF NOT EXISTS atp_tournaments (
+		tourney_id TEXT PRIMARY KEY,
+		tourney_name TEXT,
+		surface TEXT,
+		draw_size INT,
+		tourney_level TEXT,
+		tourney_date TIMESTAMP
+	);`
+	_, err := db.Exec(createTableSQL)
+	if err != nil {
+		log.Fatal().Err(err).Msg("Failed to create table")
+		return err
+	}
+	log.Info().Msg("Table atp_tournaments ready")
+
+	// read tournament csv
+
+	file, err := os.Open("D:\\dev\\horseracing\\data\\atp_tournaments.csv")
+	if err != nil {
+		log.Fatal().Err(err).Msg("Failed to unmarshall tournament csv data")
+	}
+	defer file.Close()
+
+	var tournaments []tennis.Tournament
+	if err := gocsv.UnmarshalFile(file, &tournaments); err != nil {
+		log.Fatal().Err(err).Msg("Failed to parse tournament CSV")
+	}
+	log.Info().Int("count", len(tournaments)).Msg("Parsed tournaments")
+
+	insertSQL := `
+	INSERT INTO atp_tournaments (
+		tourney_id, tourney_name, surface, draw_size, tourney_level, tourney_date
+	) VALUES (
+		$1, $2, $3, $4, $5, $6
+	) ON CONFLICT (tourney_id) DO NOTHING;`
+
+	tx, err := db.Begin()
+	if err != nil {
+		log.Fatal().Err(err).Msg("Failed to start transaction")
+	}
+	defer tx.Rollback()
+
+	stmt, err := tx.Prepare(insertSQL)
+	if err != nil {
+		log.Fatal().Err(err).Msg("Failed to prepare statement")
+	}
+	defer stmt.Close()
+
+	inserted := 0
+	for _, t := range tournaments {
+		_, err := stmt.Exec(
+			t.TourneyID, t.TourneyName, t.Surface, t.DrawSize, t.TourneyLevel, t.TourneyDate,
+		)
+		if err != nil {
+			log.Error().Err(err).Msgf("Failed to insert tournament %s", t.TourneyID)
+			os.Exit(1)
+		}
+		inserted++
+	}
+
+	if err := tx.Commit(); err != nil {
+		log.Fatal().Err(err).Msg("Failed to commit transaction")
+	}
+
+	log.Info().Int("inserted", inserted).Msg("Successfully loaded data into database")
+
+	return nil
 }
