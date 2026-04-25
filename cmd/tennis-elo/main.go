@@ -15,6 +15,7 @@ const (
 	kFactor = 32.0
 )
 
+// tennis elo calculation
 func main() {
 	// 1. Connect to Postgres
 	connStr := os.Getenv("DATABASE_URL")
