@@ -21,6 +21,9 @@ test:
 repository:
 	./scripts/repository
 
+start-db:
+	docker run -d --name postgres-db -p 5433:5432 -e POSTGRES_PASSWORD=password postgres:latest
+
 migrate:
 	migrate -database "postgresql://localhost/horse_racing?sslmode=disable" -path cmd/postgres/migrate up
 

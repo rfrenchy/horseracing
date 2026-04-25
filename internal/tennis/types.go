@@ -72,3 +72,9 @@ type Tournament struct {
 	TourneyLevel string `csv:"tourney_level" db:"tourney_level"`
 	TourneyDate  string `csv:"tourney_date" db:"tourney_date"`
 }
+
+type Player struct {
+	ID int `db:"player_id"`
+	Name string `csv:"winner_name" db:"player_name"`
+	Country string `csv:"winner_ioc" db:"country"`
+}

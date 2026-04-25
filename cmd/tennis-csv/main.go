@@ -43,6 +43,12 @@ func main() {
 					return createTournamentsTable(db)
 				},
 			},
+			{
+				Name: "create-players",
+				Action: func(c *cli.Context) error {
+					return createPlayersTable(db)
+				},
+			},
 		},
 	}
 
@@ -263,6 +269,75 @@ func createTournamentsTable(db *sql.DB) error {
 	}
 
 	log.Info().Int("inserted", inserted).Msg("Successfully loaded data into database")
+
+	return nil
+}
+
+func createPlayersTable(db *sql.DB) error {
+
+	createTableSQL := `
+		CREATE TABLE IF NOT EXISTS players (
+			player_id SERIAL PRIMARY KEY,
+			player_name TEXT,
+			country TEXT
+		)
+	`
+	_,err := db.Exec(createTableSQL)
+	if err != nil {
+		log.Fatal().Err(err).Msg("Failed to create table")
+		return err
+	}
+	log.Info().Msg("Players Table created")
+
+	// read player csv file
+	file,err := os.Open("D:\\dev\\horseracing\\data\\player_names_winner.csv")
+	if err != nil {
+		log.Fatal().Err(err).Msg("Failed to unmarshall player csv data")
+	}
+	defer file.Close()
+
+	// unmarshal to type
+	var players []tennis.Player
+	if err := gocsv.UnmarshalFile(file, &players); err != nil {
+		log.Fatal().Err(err).Msg("Failed to parse player csv")
+	}
+
+	// write to db
+	insertSQL := `
+	INSERT INTO players (
+		player_name, country
+	) VALUES (
+		$1, $2 
+	) ON CONFLICT (player_id) DO NOTHING;`
+
+	tx, err := db.Begin()
+	if err != nil {
+		log.Fatal().Err(err).Msg("Failed to start transaction")
+	}
+	defer tx.Rollback()
+
+	stmt, err := tx.Prepare(insertSQL)
+	if err != nil {
+		log.Fatal().Err(err).Msg("Failed to prepare statement")
+	}
+
+	inserted := 0
+	for _, p := range players {
+		_, err := stmt.Exec(
+			p.Name, p.Country,
+		)
+		if err != nil {
+			log.Error().Err(err).Msgf("failed to insert player %s", p.Name)
+			os.Exit(1)
+		}
+		inserted++
+	}
+
+	if err := tx.Commit(); err != nil {
+		log.Fatal().Err(err).Msg("Failed to commit transaction")
+	}
+
+	log.Info().Int("inserted", inserted).Msg("Successfully inserted data into database")
 
 	return nil
 }
