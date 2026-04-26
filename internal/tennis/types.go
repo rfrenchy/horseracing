@@ -75,6 +75,6 @@ type Tournament struct {
 
 type Player struct {
 	ID int `db:"player_id"`
-	Name string `csv:"winner_name" db:"player_name"`
-	Country string `csv:"winner_ioc" db:"country"`
+	Name string `csv:"name" db:"player_name"`
+	Country string `csv:"country" db:"country"` 
 }
