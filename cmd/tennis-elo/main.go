@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"os"
+	"time"
 
 	"punts/internal/tennis"
 
@@ -53,7 +54,7 @@ func main() {
 	// 3. Query all matches
 	query := `
 		SELECT tourney_id, match_num, tourney_date, winner_id, loser_id, surface
-		FROM atp_matches
+		FROM atp_matches_raw
 		ORDER BY tourney_date ASC, match_num ASC
 	`
 	rows, err := db.Query(query)
@@ -108,7 +109,8 @@ func main() {
 	processed := 0
 	for rows.Next() {
 		var tourneyID string
-		var matchNum, tourneyDate, winnerID, loserID int
+		var matchNum, winnerID, loserID int
+		var tourneyDate time.Time
 		var surface string
 
 		if err := rows.Scan(&tourneyID, &matchNum, &tourneyDate, &winnerID, &loserID, &surface); err != nil {
