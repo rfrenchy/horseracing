@@ -59,7 +59,7 @@ func main() {
 	router.GET("/player/:player", func(c *gin.Context) {
 		playerid := c.Params.ByName("player")
 
-		query := `SELECT winner_name
+		query := `SELECT DISTINCT winner_name
 		FROM atp_matches_raw
 		WHERE winner_id = ` + playerid
 
@@ -97,7 +97,7 @@ func setupDb() *sql.DB {
 	if err != nil {
 		log.Fatal().Err(err).Msg("Failed to connect to database")
 	}
-	defer db.Close()
+	// defer db.Close()
 
 	if err := db.Ping(); err != nil {
 		log.Fatal().Err(err).Msg("Failed to ping database")
