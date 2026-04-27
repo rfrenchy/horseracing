@@ -10,6 +10,7 @@ type EloEntry = {
 
 export default function Home() {
   const [playerId, setPlayerId] = useState("");
+  const [playerName, setPlayerName] = useState("");
   const [entries, setEntries] = useState<EloEntry[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -28,8 +29,9 @@ export default function Home() {
     setSearchedId(null);
 
     try {
-      console.log("fetching")
       const res = await fetch(`/api/elos/${playerId.trim()}`);
+      const res2 = await fetch(`/api/player/${playerId.trim()}`);
+      const data2 = await res2.json();
       if (!res.ok) {
         throw new Error("Failed to fetch player data.");
       }
@@ -37,6 +39,7 @@ export default function Home() {
       if (data.entries && data.entries.length > 0) {
         setEntries(data.entries);
         setSearchedId(playerId.trim());
+        setPlayerName(data2.player_name)
       } else {
         setError("No Elo records found for this player ID.");
       }
@@ -48,7 +51,9 @@ export default function Home() {
   };
 
   const fetchPlayerName = async (e: React.FormEvent) => {
+      const res = await fetch(`/api/player/${playerId.trim()}}`);
 
+      const data = await res.json()
   }
 
   return (
@@ -76,12 +81,15 @@ export default function Home() {
             <div className="relative flex items-center bg-zinc-900 rounded-2xl p-2 ring-1 ring-white/10 shadow-2xl">
               <input
                 type="text"
-                placeholder="Enter Player ID (e.g. 104925)"
+                placeholder="Enter Player ID (e.g. 206173)"
                 value={playerId}
                 onChange={(e) => setPlayerId(e.target.value)}
                 className="w-full bg-transparent border-none px-4 py-3 text-white placeholder-zinc-500 focus:outline-none focus:ring-0 text-lg"
                 required
               />
+              <div>
+                {playerName}
+              </div>
               <button
                 type="submit"
                 disabled={loading}
